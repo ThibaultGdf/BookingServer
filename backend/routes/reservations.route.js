@@ -1,16 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var reservationController = require('../controllers/reservation.controller.js')
 
 /* GET */
-router.get('/', async function(req, res, next) {
-        try {
-            const reservations = await Reservation.findAll()
-            console.log(reservations);
-            res.json({message:reservations});
-        } catch(e) {
-            res.json(e);
-        }
-    });
+router.get('/', reservationController.get);
 
 /* POST */
 router.post('/', function(req, res, next) {

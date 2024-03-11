@@ -1,10 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var roomController = require('../controllers/room.controller.js')
 
 /* GET */
-router.get('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route GET des rooms' });
-});
+router.get('/', roomController.get);
 
 /* POST */
 router.post('/', function(req, res, next) {

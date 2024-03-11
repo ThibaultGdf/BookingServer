@@ -1,24 +1,17 @@
 var express = require('express');
 var router = express.Router();
+var userController = require('../controllers/user.controller.js')
 
 /* GET */
-router.get('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route GET des users' });
-});
+router.get('/', userController.get);
 
 /* POST */
-router.post('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route POST des users' });
-});
+router.post('/', userController.post);
 
   /* PUT */
-router.put('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route PUT des users' });
-});
+router.put('/', userController.put);
 
   /* DELETE */
-router.delete('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route DELETE des users' });
-});
+router.delete('/', userController.destroy);
 
 module.exports = router;
