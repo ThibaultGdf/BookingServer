@@ -206,8 +206,25 @@ router.delete('/', function(req, res, next) {
 module.exports = router;
 ```
 
-☑️ Créer et envoyer les requêtes sur postman.
+☑️ Créer un environement sur Postman.
 
+1. New
+2. Environment
+3. Donner un nom à l'environment
+4. Créer les variables à l'intérieur.
+
+```bash
+Exemple: BaseUrlApi / BaseUrlAuth / access_token
+```
+
+☑️ Créer et envoyer les requêtes sur postman avec les variables d'environement.
+
+```bash
+{{BaseUrlApi}}/reservations
+{{BaseUrlApi}}/rooms
+{{BaseUrlApi}}/spots
+{{BaseUrlApi}}/users
+```
 
 ## Créer la base de données
 
@@ -610,3 +627,288 @@ const get = async function(req, res, next) {
 module.exports = { get };
 ```
 
+## Authentification
+
+☑️ Créer un fichier auth dans le dossier routes.
+```bash
+cd routes
+touch auth.route.js
+```
+
+☑️ Importer le router et exporter le module.
+
+```bash
+const express = require("express");
+
+const router = express.Router();
+
+module.exports = router;
+```
+
+☑️ Installer la dépendance jsonwebtoken.
+
+```bash
+npm install jsonwebtoken
+```
+
+☑️ Importer jwt dans le fichier auth.route.js.
+
+```bash
+const jwt = require('jsonwebtoken');
+```
+
+☑️ Installer la dépendance bcrypt pour chiffrer le mot de passe.
+
+```bash
+$ npm install bcrypt
+```
+
+☑️ Importer bcrypt dans le fichier auth.route.js.
+
+```bash
+const bcrypt = require('bcrypt');
+```
+
+☑️ Créer les routes dans POSTMAN.
+
+```bash
+POST /auth/signup
+POST /auth/signin
+```
+
+☑️ Créer le router auth dans le fichier app.js.
+
+```javascript
+app.use('/auth', authRouter);
+```
+
+☑️ Renommer la route du router index dans le fichier app.js.
+
+```javascript
+app.use('/api', indexRouter);
+```
+
+## Sign Up
+
+☑️ Ajouter la fonction SignUp avec les données reçu de Postman.
+
+```javascript
+router.post('/signup', (req, res) => {
+
+const user = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    user_role: req.body.role,
+    user_password: req.body.password,
+};
+  res.json({message: utilisateur créé})
+})
+```
+
+## Hasher le mot de passe
+
+☑️ Créer les variables pour chiffrer le mot de passe dans la fonction SignUp
+
+```javascript
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+```
+
+
+☑️ Ajouter l'utilisateur dans la base de donnée avec async/await
+
+```javascript
+router.post('/signup', async (req, res) => {
+
+    const salt = await bcrypt.genSalt(10);
+    const { firstName, lastName, email } = req.body
+    const user_password = req.body.password
+    const hashedPassword = await bcrypt.hash(user_password, salt);
+
+    const user = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        user_role: "customer",
+        user_password: hashedPassword,
+    };
+try {
+    await User.create(user);
+    res.json({user})
+} catch(error) {
+    console.log(error)
+};
+});
+```
+
+☑️ Sécuriser les champs envoyés dans la base de donnée pour qu'ils ne soient pas vide.
+```javascript
+EN ATTENTE DU CODE
+```
+
+## Sign In
+
+☑️ Créer la route pour se connecter sur Postman.
+
+☑️ Créer la fonction SignUp dans mon controller.
+```javascript
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+
+const { User } = require('../config/db.js');
+
+const signUp = async (req, res) => {
+    const salt = await bcrypt.genSalt(10);
+
+    const { firstName, lastName, email } = req.body
+    const user_password = req.body.password
+
+    const hashedPassword = await bcrypt.hash(user_password, salt);
+    
+
+    const user = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        user_role: "customer",
+        user_password: hashedPassword,
+    };
+
+    if (!user) {
+        return res.status(422).json ({ message: "Le User n'existe pas"})
+    }
+
+    try {
+        await User.create(user);
+        res.json({user})
+    } catch(error) {
+        console.log(error)
+    };
+};
+
+module.exports = { signUp };
+```
+☑️ Créer la route SignIn dans mon router.
+```javascript
+var authController = require('../controllers/auth.controller.js')
+
+router.post('/signup', authController.signUp);
+```
+
+☑️ Créer la fonction SignIn dans mon controller.
+
+☑️ Récupérer l'utilisateur correspondant à l'adresse email envoyée.
+
+```javascript
+const signIn = async (req, res) => {
+    const user = await User.findOne({
+        where: {
+            email: req.body.email
+        }
+    })
+}
+```
+
+☑️ Vérifier que l'utilisateur contient bien une adresse email.
+```javascript
+if (!user) {
+        return res.status(400).json({ message: "Nom d'utilisateur ou mot de passe incorrect"});
+    }
+```
+
+☑️ Comparer le mot de passe de postman avec le mot de passe dans ma base de donnée.
+```javascript
+    const validPassword = await bcrypt.compare(req.body.password, user.user_password);
+    if (!validPassword) {
+        res.status(400).json({ message: "Mot de passe incorrect"})
+    }
+```
+
+☑️ Création du payload qui va chiffrer les données dans le token.
+```javascript
+const payload = {
+        id: user.id,
+        email: user.email,
+        role: user.user_role
+    }
+```
+
+☑️ Définir une SECRET_KEY.
+```javascript
+const SECRET_KEY = 'secretkey23456';
+```
+
+☑️ Créer le token avec les informations du payload, la clée secrète et le temps d'expiration du token.
+```javascript
+const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
+    res.json({token: token});
+```
+
+☑️ /controllers/auth.controller.js
+```javascript
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+
+const { User } = require('../config/db.js');
+
+const SECRET_KEY = 'secretkey23456';
+
+const signUp = async (req, res) => {
+    const salt = await bcrypt.genSalt(10);
+
+    const { firstName, lastName, email } = req.body
+    const user_password = req.body.password
+
+    const hashedPassword = await bcrypt.hash(user_password, salt);
+    
+
+    const user = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        user_role: "client",
+        user_password: hashedPassword,
+    };
+
+    if (!user) {
+        return res.status(422).json ({ message: "Le User n'existe pas"})
+    }
+
+    try {
+        await User.create(user);
+        res.json({user})
+    } catch(error) {
+        console.log(error)
+    };
+};
+
+const signIn = async (req, res) => {
+    const user = await User.findOne({
+        where: {
+            email: req.body.email
+        }
+    });
+
+    if (!user) {
+        return res.status(400).json({ message: "Nom d'utilisateur incorrect"});
+    }
+
+    const validPassword = await bcrypt.compare(req.body.password, user.user_password);
+    if (!validPassword) {
+        res.status(400).json({ message: "Mot de passe incorrect"})
+    }
+
+    const payload = {
+        id: user.id,
+        email: user.email,
+        role: user.user_role
+    }
+
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
+
+    res.status(201).json({token: token});
+};
+
+module.exports = { signUp, signIn };
+```
