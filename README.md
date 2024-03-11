@@ -4,36 +4,36 @@
 
 ☑️ Créer un dossier projet.
 
-```javascript
-$ mkdir BookingServer
+```bash
+mkdir BookingServer
 ```
 
 ☑️ Créer un dossier backend à l'intérieur du dossier projet.
 
-```javascript
-$ cd BookingServer
-$ mkdir backend
+```bash
+cd BookingServer
+mkdir backend
 ```
 
 ☑️ Se déplacer dans le dossier backend à l'aide du terminal et installer express.
 
-```javascript
-$ cd backend
-$ npm install express-generator
+```bash
+cd backend
+npm install express-generator
 ```
 
 ☑️ Importer le fichier app.js ainsi que d'autres dossiers.
 
-```javascript
-$ npx express-generator
+```bash
+npx express-generator
 ```
 
 ☑️ Supprimer le dossier public et le dossier views.
 
 ☑️ Installer les dépendances nécessaires :
 
-```javascript
-$ npm install sequelize cors dotenv jsonwebtoken bcryptjs
+```bash
+npm install sequelize cors dotenv jsonwebtoken bcryptjs
 ```
 
 ☑️ Automatiser l'actualisation du serveur dans le fichier package.json.
@@ -46,19 +46,19 @@ $ npm install sequelize cors dotenv jsonwebtoken bcryptjs
 
 ☑️ Allumer le serveur sur le port 3000.
 
-```javascript
-$ npm run start
+```bash
+npm run start
 ```
 
 ## Implémentation des routes
 
 ☑️ Créer les fichers dans le dossier routes.
 
-```javascript
-$ cd routes
-$ touch reservations.route.js
-$ touch rooms.route.js
-$ touch spots.route.js
+```bash
+cd routes
+touch reservations.route.js
+touch rooms.route.js
+touch spots.route.js
 ```
 
 ☑️ Renommer le fichier index.js et le fichier user.js.
@@ -213,20 +213,20 @@ module.exports = router;
 
 ☑️ Installer PostgreSQL.
 
-```javascript
-$ brew install postgresql@15
+```bash
+brew install postgresql@15
 ```
 
 ☑️ Installer et initialiser Sequelize.
 
-```javascript
+```bash
 npm install --save sequelize
 sequelize init
 ```
 
 ☑️ Installer Postgres.
 
-```javascript
+```bash
 npm install --save pg pg-hstore
 ```
 
@@ -260,15 +260,15 @@ npm install --save pg pg-hstore
 
 ☑️ Créer un fichier db.js à la racine du projet.
 
-```javascript
-$ touch db.js
+```bash
+touch db.js
 ```
 
 
 ☑️ Créer notre base de donnée.
 
-```javascript
-$ npx sequelize-cli db:create
+```bash
+npx sequelize-cli db:create
 ```
 
 ☑️ Faire la connexion avec la base de donnée.
@@ -294,67 +294,63 @@ try {
 
 ☑️ Créer le model Reservation
 
-```javascript
+```bash
 npx sequelize-cli model:generate --name Reservation --attributes number_of_customers:integer,reservation_date:date,reservation_name:string,reservation_note:string,reservation_status:integer
 ```
 
 ☑️ Créer le model Room
 
-```javascript
+```bash
 npx sequelize-cli model:generate --name Room --attributes room_name:string
 ```
 
 ☑️ Créer le model Spot
 
-```javascript
+```bash
 npx sequelize-cli model:generate --name Spot --attributes spot_name:string
 ```
 
 ☑️ Créer le model User
 
-```javascript
+```bash
 npx sequelize model:generate --name User --attributes firstName:string,lastName:string,email:string,user_role:string,user_password:string
 ```
 
 ☑️ Migrer les models dans la base de donnée
 
-```javascript
+```bash
 npx sequelize-cli db:migrate
 ```
 
 ☑️ Actualiser la base de donnée sur TablePlus
 
-```javascript
+```bash
 Commant + R
 ```
 
 ## Création des Seeders
 
 ### ☑️ User
-```javascript
-$ npx sequelize-cli seed:generate --name user
+```bash
+npx sequelize-cli seed:generate --name user
 ```
 
 ### ☑️ Reservation
-```javascript
-$ npx sequelize-cli seed:generate --name reservation
+```bash
+npx sequelize-cli seed:generate --name reservation
 ```
 
 ### ☑️ Spot
-```javascript
-$ npx sequelize-cli seed:generate --name spot
+```bash
+npx sequelize-cli seed:generate --name spot
 ```
 
 ### ☑️ Room
-```javascript
-$ npx sequelize-cli seed:generate --name room
+```bash
+npx sequelize-cli seed:generate --name room
 ```
 
 ☑️ Ajouter des données fictives dans les seeders.
-
-'use strict';
-
-/** @type {import('sequelize-cli').Migration} */
 
 ### Reservation
 ```javascript
@@ -433,8 +429,55 @@ module.exports = {
 };
 ```
 
-☑️ Envoyer les seeders dans la base de donnée
+☑️ Envoyer les seeders dans la base de donnée.
+
+```bash
+npx sequelize-cli db:seed:all
+```
+
+### Lier les routes à la base de donnée
+
+☑️ Ajouter sequelize et DataTypes à nos routers
+
 ```javascript
-$ npx sequelize-cli db:seed:all
+const Reservation = require("./models/reservation")(sequelize, DataTypes);
+const Room = require("./models/room")(sequelize, DataTypes);
+const Spot = require("./models/spot")(sequelize, DataTypes);
+const User = require("./models/user")(sequelize, DataTypes);
+```
+
+
+
+☑️ Modifier les routes pour récupérer toutes les données.
+
+```javascript
+router.get('/', async function(req, res, next) {
+
+  try {
+    const reservations = await Reservation.findAll()
+    console.log(reservations);
+    res.json({message:reservations});
+  } catch(e) {
+    res.json(e);
+  }
+});
+```
+
+
+☑️ Ajouter dans le fichier db.js la liaison des models à la base de donnée.
+```javascript
+const { Sequelize, DataTypes } = require('sequelize');
+
+const Reservation = require("./models/reservation")(sequelize, DataTypes);
+const Room = require("./models/room")(sequelize, DataTypes);
+const Spot = require("./models/spot")(sequelize, DataTypes);
+const User = require("./models/user")(sequelize, DataTypes);
+
+module.exports = { Reservation, Room, Spot, User };
+```
+## Ajouter les controllers
+
+```bash
+mkdir controllers
 ```
 
