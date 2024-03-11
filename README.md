@@ -276,7 +276,7 @@ npx sequelize-cli db:create
 ```javascript
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize("postgres://thibaultgodefroy:password@localhost:3000/postgres");
+const sequelize = new Sequelize("postgres://thibaultgodefroy:password@localhost:5432/bookingserver_development");
 
 try {
   sequelize.authenticate().then(() => {
@@ -475,9 +475,138 @@ const User = require("./models/user")(sequelize, DataTypes);
 
 module.exports = { Reservation, Room, Spot, User };
 ```
+
 ## Ajouter les controllers
 
 ```bash
 mkdir controllers
+cd controllers
+```
+
+```bash
+touch reservation.controller.js
+```
+
+```bash
+touch room.controller.js
+```
+
+```bash
+touch spot.controller.js
+```
+
+```bash
+touch user.controller.js
+```
+
+## Déplacer les fonctions de routes dans les controllers
+
+☑️ Modifier le fichier user.route.js
+
+```javascript
+var userController = require('../controllers/user.controller.js')
+
+/* GET */
+router.get('/', userController.get);
+```
+
+☑️ Ajouter la fonction pour obtenir tous les users dans le fichier room.controller.js
+
+```javascript
+const { User } = require('../config/db.js');
+
+const get = async function(req, res, next) {
+    try {
+        const users = await User.findAll()
+        console.log(users);
+        res.status(200).json({ users })
+    } catch(error) {
+        res.json(error);
+    }
+};
+
+module.exports = { get };
+```
+
+
+☑️ Modifier le fichier reservation.route.js
+
+```javascript
+var reservationController = require('../controllers/reservation.controller.js')
+
+/* GET */
+router.get('/', reservationController.get);
+```
+
+
+☑️ Ajouter la fonction pour obtenir toutes les reservations dans le fichier reservation.controller.js 
+```javascript
+const { Reservation } = require('../config/db.js');
+
+const get = async function(req, res, next) {
+    try {
+        const reservations = await Reservation.findAll()
+        console.log(reservations);
+        res.status(200).json({ reservations })
+    } catch(error) {
+        res.json(error);
+    }
+};
+
+module.exports = { get };
+```
+
+☑️ Modifier le fichier room.route.js
+
+```javascript
+var roomController = require('../controllers/room.controller.js')
+
+/* GET */
+router.get('/', roomController.get);
+```
+
+☑️ Ajouter la fonction pour obtenir toutes les rooms dans le fichier room.controller.js.
+
+```javascript
+const { Room } = require('../config/db.js');
+
+const get = async function(req, res, next) {
+    try {
+        const rooms = await Room.findAll()
+        console.log(rooms);
+        res.status(200).json({ rooms })
+    } catch(error) {
+        res.json(error);
+    }
+};
+
+module.exports = { get };
+```
+
+☑️ Modifier le fichier spot.route.js.
+
+```javascript
+var spotController = require('../controllers/spot.controller.js')
+
+/* GET */
+router.get('/', spotController.get);
+```
+
+☑️ Ajouter la fonction pour obtenir tous les spots dans le fichier spot.controller.js.
+
+```javascript
+const { Spot } = require('../config/db.js');
+
+const get = async function(req, res, next) {
+    try {
+        const spots = await Spot.findAll()
+        console.log(spots);
+        res.status(200).json({ spots })
+    } catch(error) {
+        res.json(error);
+    }
+};
+
+module.exports = { get };
 ```
 
