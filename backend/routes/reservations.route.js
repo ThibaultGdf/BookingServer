@@ -2,9 +2,15 @@ var express = require('express');
 var router = express.Router();
 
 /* GET */
-router.get('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route GET des reservations' });
-});
+router.get('/', async function(req, res, next) {
+        try {
+            const reservations = await Reservation.findAll()
+            console.log(reservations);
+            res.json({message:reservations});
+        } catch(e) {
+            res.json(e);
+        }
+    });
 
 /* POST */
 router.post('/', function(req, res, next) {
