@@ -33,7 +33,7 @@ $ npx express-generator
 ☑️ Installer les dépendances nécessaires :
 
 ```javascript
-$ npm install nodemon sequelize cors dotenv jsonwebtoken bcryptjs
+$ npm install sequelize cors dotenv jsonwebtoken bcryptjs
 ```
 
 ☑️ Automatiser l'actualisation du serveur dans le fichier package.json.
@@ -41,6 +41,8 @@ $ npm install nodemon sequelize cors dotenv jsonwebtoken bcryptjs
 ```javascript
 "start": "node --watch ./bin/www"
 ```
+
+☑️ Créer le fichier .gitignore à la racine du projet et ajouter node_modules à l'intérieur.
 
 ☑️ Allumer le serveur sur le port 3000.
 
@@ -84,7 +86,7 @@ router.use("/spots", spotRouter);
 router.use("/users", userRouter);
 ```
 
-## Ajouter les routes dans les fichiers.
+## Ajouter les routes dans les fichiers
 
 ☑️ ROUTES/RESERVATIONS
 ```javascript
@@ -204,54 +206,235 @@ router.delete('/', function(req, res, next) {
 module.exports = router;
 ```
 
-☑️ Créer les routes sur postman.
+☑️ Créer et envoyer les requêtes sur postman.
 
 
-Gérer les requêtes GET, POST, PUT et DELETE pour chaque route.
+## Créer la base de données
 
-🔘  Valider les données entrantes et renvoyer des erreurs si nécessaire.
+☑️ Installer PostgreSQL.
 
-🔘  Formater les réponses de l'API de manière cohérente.
+```javascript
+$ brew install postgresql@15
+```
 
-### Créer la base de données
+☑️ Installer et initialiser Sequelize.
 
-🔘  Choisir un système de gestion de base de données (SGBD) : PostgreSQL, MySQL, MongoDB, etc.
+```javascript
+npm install --save sequelize
+sequelize init
+```
 
-🔘  Installer le SGBD et créer une nouvelle base de données.
+☑️ Installer Postgres.
 
-🔘  Créer les tables et les relations nécessaires dans la base de données.
+```javascript
+npm install --save pg pg-hstore
+```
 
-🔘  Définir les modèles de données pour chaque table.
+☑️ Modifier le fichier config.js
 
-### Lien entre la base de données et les routes
+```javascript
+{
+  "development": {
+    "username": "thibaultgodefroy",
+    "password": "password",
+    "database": "bookingserver_development",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "thibaultgodefroy",
+    "password": "password",
+    "database": "bookingserver_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "thibaultgodefroy",
+    "password": "password",
+    "database": "bookingserver_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
+```
 
-🔘  Utiliser sequelize pour se connecter à la base de données.
+☑️ Créer un fichier db.js à la racine du projet.
 
-🔘  Définir les modèles de données sequelize pour chaque table.
+```javascript
+$ touch db.js
+```
 
-🔘  Utiliser les modèles pour effectuer des requêtes CRUD dans la base de données.
 
-🔘  Associer les modèles aux routes de l'API.
+☑️ Créer notre base de donnée.
 
-### Authentification
+```javascript
+$ npx sequelize-cli db:create
+```
 
-🔘  Implémenter un système d'authentification pour protéger les routes de l'API.
+☑️ Faire la connexion avec la base de donnée.
 
-🔘  Utiliser bcryptjs pour hacher les mots de passe des utilisateurs.
+```javascript
+const { Sequelize } = require('sequelize');
 
-🔘  Générer des jetons Web JSON (JWT) pour les utilisateurs authentifiés.
+const sequelize = new Sequelize("postgres://thibaultgodefroy:password@localhost:3000/postgres");
 
-🔘  Vérifier les jetons JWT pour autoriser l'accès aux routes protégées.
+try {
+  sequelize.authenticate().then(() => {
+    console.log('Connection has been established successfully.');
+  });
+  
+} catch (error) {
+  console.error('Unable to connect to the database:', error);
+}
+```
 
-### Implémenter les tests
+☑️ Aller sur TablePlus et tester la connexion de notre serveur en ajoutant les informations indiqués dans le fichier /config/config.json.
 
-🔘  Installer Mocha et Chai pour les tests unitaires.
+## Créer les models et migrations
 
-🔘  Écrire des tests unitaires pour chaque route de l'API.
+☑️ Créer le model Reservation
 
-🔘  Tester la validation des données entrantes et la gestion des erreurs.
+```javascript
+npx sequelize-cli model:generate --name Reservation --attributes number_of_customers:integer,reservation_date:date,reservation_name:string,reservation_note:string,reservation_status:integer
+```
 
-🔘  Tester l'interaction avec la base de données.
+☑️ Créer le model Room
 
-🔘  Mettre en place un système d'intégration continue (CI) pour exécuter les tests automatiquement.
+```javascript
+npx sequelize-cli model:generate --name Room --attributes room_name:string
+```
+
+☑️ Créer le model Spot
+
+```javascript
+npx sequelize-cli model:generate --name Spot --attributes spot_name:string
+```
+
+☑️ Créer le model User
+
+```javascript
+npx sequelize model:generate --name User --attributes firstName:string,lastName:string,email:string,user_role:string,user_password:string
+```
+
+☑️ Migrer les models dans la base de donnée
+
+```javascript
+npx sequelize-cli db:migrate
+```
+
+☑️ Actualiser la base de donnée sur TablePlus
+
+```javascript
+Commant + R
+```
+
+## Création des Seeders
+
+### ☑️ User
+```javascript
+$ npx sequelize-cli seed:generate --name user
+```
+
+### ☑️ Reservation
+```javascript
+$ npx sequelize-cli seed:generate --name reservation
+```
+
+### ☑️ Spot
+```javascript
+$ npx sequelize-cli seed:generate --name spot
+```
+
+### ☑️ Room
+```javascript
+$ npx sequelize-cli seed:generate --name room
+```
+
+☑️ Ajouter des données fictives dans les seeders.
+
+'use strict';
+
+/** @type {import('sequelize-cli').Migration} */
+
+### Reservation
+```javascript
+module.exports = {
+  async up (queryInterface, Sequelize) {
+
+    await queryInterface.bulkInsert('Reservations', [{
+      number_of_customers: 4,
+      reservation_date: new Date(),
+      reservation_name: "Alex",
+      reservation_note: "Un menu végétarien",
+      reservation_status: 1,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }]);
+  },
+
+  async down (queryInterface, Sequelize) {
+    await queryInterface.bulkDelete('Reservations', null, {});
+  }
+};
+```
+
+### Room
+```javascript
+module.exports = {
+  async up (queryInterface, Sequelize) {
+    await queryInterface.bulkInsert('Rooms', [{
+      room_name: "Salle 1",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }]);
+  },
+
+  async down (queryInterface, Sequelize) {
+    await queryInterface.bulkDelete('Rooms', null, {});
+  }
+};
+```
+
+### Spot
+```javascript
+module.exports = {
+  async up (queryInterface, Sequelize) {
+    await queryInterface.bulkInsert('Spots', [{
+      spot_name: "Le Bistrot de la Gare",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }]);
+  },
+
+  async down (queryInterface, Sequelize) {
+    await queryInterface.bulkDelete('Spots', null, {});
+  }
+};
+```
+
+### User
+```javascript
+module.exports = {
+  async up (queryInterface, Sequelize) {
+    await queryInterface.bulkInsert('Users', [{
+      firstName: "Alex",
+      lastName: "Zerah",
+      email: "pro@alexzerah.com",
+      user_role: "client",
+      user_password: "password en attente de hashage",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }]);
+  },
+
+  async down (queryInterface, Sequelize) {
+    await queryInterface.bulkDelete('Users', null, {});
+  }
+};
+```
+
+☑️ Envoyer les seeders dans la base de donnée
+```javascript
+$ npx sequelize-cli db:seed:all
+```
 
