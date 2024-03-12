@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize("postgres://thibaultgodefroy:password@localhost:5432/bookingserver_development");
+const sequelize = new Sequelize(`postgres://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.PORT_DB}/${process.env.DATABASE}`);
 
 try {
 sequelize.authenticate().then(() => {

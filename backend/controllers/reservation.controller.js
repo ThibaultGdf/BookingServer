@@ -1,6 +1,6 @@
 const { Reservation } = require('../config/db.js');
 
-const get = async function(req, res, next) {
+const get = async function(_, res) {
     try {
         const reservations = await Reservation.findAll()
         console.log(reservations);
