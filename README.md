@@ -44,6 +44,7 @@ npm install sequelize cors dotenv jsonwebtoken bcryptjs
 
 ☑️ Créer le fichier .gitignore à la racine du projet et ajouter node_modules à l'intérieur.
 
+
 ☑️ Allumer le serveur sur le port 3000.
 
 ```bash
@@ -852,7 +853,7 @@ const bcrypt = require("bcryptjs");
 
 const { User } = require('../config/db.js');
 
-const SECRET_KEY = 'secretkey23456';
+const SECRET_KEY = process.env.SECRET_KEY;
 
 const signUp = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
@@ -912,3 +913,46 @@ const signIn = async (req, res) => {
 
 module.exports = { signUp, signIn };
 ```
+
+## Securiser les données avec DOTENV
+
+☑️ Installer la dépendance dotenv
+```bash
+npm install dotenv
+```
+
+☑️ Créer le fichier .env dans le dossier backend
+```bash
+touch .env
+```
+
+☑️ Remplir le fichier .env
+```bash
+USER=thibaultgodefroy
+HOST=localhost
+DATABASE=bookingserver_development
+PASSWORD=password
+PORT=3000
+SECRET_KEY=secretkey23456
+```
+
+☑️ Configurer dotenv pour pouvoir utiliser process.env.
+```javascript
+require('dotenv').config();
+```
+
+☑️ Modifier la connexion avec ma base de donnée dans le fichier config/db.js.
+```javascript
+AVANT
+const sequelize = new Sequelize("postgres://thibaultgodefroy:password@localhost:5432/bookingserver_development");
+
+APRÈS
+const sequelize = new Sequelize(`postgres://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.PORT_DB}/${process.env.DATABASE}`);
+```
+
+☑️ Ajouter le fichier .env dans le .gitignore.
+
+☑️ Ajouter l'access token en environement sur postman.
+
+☑️ Créer un dossier middlewares avec le fichier authenticate.middleware.js à l'interieur.
+
