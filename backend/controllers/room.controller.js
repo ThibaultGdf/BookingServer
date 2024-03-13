@@ -1,25 +1,100 @@
 const { Room } = require('../config/db.js');
 
-const get = async function(req, res) {
+const getAll = async function(req, res) {
     try {
         const rooms = await Room.findAll()
-        console.log(rooms);
         res.status(200).json({ rooms })
     } catch(error) {
-        res.json(error);
-    }
+        res.status(500).json({message: `Erreur serveur lors de la récupération des Rooms`});
+    };
+};
+
+const getOne = async function(req, res) {
+    try {
+        // Récupération de l'id dans postman
+        const id = req.params.id
+
+        // Trouver la room par son id
+        const room = await Room.findByPk(id)
+
+        // Vérifier si la room existe
+        if(!room) {
+            return res.status(404).json({ message: `La room ${id} n'existe pas !`})
+        }
+        res.status(200).json({ room })
+    } catch(error) {
+        res.status(500).json({message: `Erreur serveur lors de la récupération d'une Room`});
+    };
 };
 
 const post = async function(req, res) {
-    res.json({ message: 'Vous êtes sur la route POST des rooms' });
-}
+    try {
+        // Récupérer les informations dans postman
+        const { room_name } = req.body
+
+        // Création d'une room
+        const room = await Room.create({
+            // Ajouter la valeur de postman dans notre base de donnée
+            room_name
+        });
+        res.status(200).json({ message: `Votre room : ${room_name}, a bien été crée`});   
+    } catch(error) {
+    res.status(500).json({ message: 'Erreur serveur lors de la création de room'});
+    };
+};
 
 const put = async function(req, res) {
-    res.json({ message: 'Vous êtes sur la route PUT des rooms' });
-}
+    try {    
+        // Trouver une room avec son ID
+        const id = req.params.id;
+
+        // Récupérer les informations dans postman
+        const { room_name } = req.body
+        
+         // Chercher la room avec l'id
+        const room = await Room.findByPk(id);
+
+        // Vérifie qu'il y a bien une room
+        if(!room) {
+            return res.status(404).json({message: `La Room ${id} n'existe pas`});
+        };
+        
+    // Modifier l'ancienne room par la nouvelle
+        room.room_name = room_name
+
+// Sauvegarder la nouvelle réservation
+        await room.save();
+
+        res.status(200).json({message: `La room a bien été modifiée` });
+    } catch (error) {
+        return res.status(500).json({message: `Erreur serveur lors de la modification d'une room`});
+    };
+};
 
 const destroy = async function(req, res) {
-    res.json({ message: 'Vous êtes sur la route DELETE des rooms' });
-}
+    try {
+        // Récuperer l'id
+        const id = req.params.id;
 
-module.exports = { get, post, put, destroy };
+        // Trouver la room avec l'id
+        const room = await Room.findByPk(id);
+
+        // Vérification que la room existe
+        if(!room) {
+            return res.status(404).json({message: `La room ${room_name} n'existe pas`});
+        }
+
+        const deletedRoom = await room.destroy();
+
+          // Vérifier que la réservation est supprimée
+        if (deletedRoom === 0) {
+            return res.status(404).json({ message: `La room ${id} n\'existe pas`})
+        }
+
+        return res.status(200).json({ message: `La room ${room} a bien été supprimée`});
+    } catch(error) {
+        return res.status(500).json({ message: `Erreur serveur lors de la suppression d'une room`});
+    };
+};
+
+module.exports = { getOne, getAll, post, put, destroy };

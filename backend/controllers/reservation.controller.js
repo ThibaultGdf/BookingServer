@@ -13,7 +13,7 @@ const getAll = async function(_, res) {
 const getOne = async function (req, res) {
     try {
         const reservation = await Reservation.findByPk(req.params.id);
-        res.json({ reservation });
+        res.status(200).json({ reservation });
     } catch (error) {
         res.status(500).json({message: 'Erreur serveur lors de la récupération d\'une réservation'});
     }
@@ -21,14 +21,20 @@ const getOne = async function (req, res) {
 
 const post = async function(req, res) {
     try {
-        const reservation = req.body
-       // Vérifier qu'il y a une réservation
-        if (!reservation) {
-        return res.status(400).json({ message: 'La réservation n\'existe pas'})
-        }
-       // Créer la réservation
-        await Reservation.create(reservation);
+
+// Récupérer les informations dans postman
+const { number_of_customers, reservation_date, reservation_name, reservation_note, reservation_status } = req.body
+
+       // Créer la réservation avec les champs de postman
+        const reservation = await Reservation.create({
+            number_of_customers,
+            reservation_date, 
+            reservation_name, 
+            reservation_note, 
+            reservation_status
+        });
     return res.status(200).json({reservation})
+
 } catch(error) {
     return res.status(500).json({message: 'Erreur serveur lors de la création d\'une réservation'})
 }
