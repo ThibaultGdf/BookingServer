@@ -982,7 +982,7 @@ const verifyJwt = (req, res, next) => {
 module.exports = { verifyJwt };
 ```
 
-☑️ Remplacer le router /api dans le fichier app.js.
+☑️ Ajouter la vérification du token dans le router /api dans le fichier app.js.
 ```javascript
 // AVANT
 app.use('/api', indexRouter);
@@ -991,4 +991,176 @@ app.use('/api', indexRouter);
 app.use('/api', authenticate.verifyJwt, indexRouter);
 ```
 
+☑️ Supprimer les éléments ci-dessous dans le fichier app.js.
+```javascript
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
+```
+
+### Implémenter la logique des routes
+
+☑️ Réservation : GET ONE
+
+1. Ajouter la route getOne dans ./routes/reservation.route.js.
+```javascript
+router.get('/:id', reservationController.getOne);
+```
+
+2. Modifier l'intérieur de la fonction dans notre ./reservation.controller.js.
+```javascript
+const getOne = async function (req, res) {
+    try {
+        const reservation = await Reservation.findByPk(req.params.id);
+        res.json({ reservation });
+    } catch (error) {
+        res.status(500).json({message: 'Erreur serveur lors de la récupération d\'une réservation'});
+    }
+};
+```
+☑️ Réservation : GET ALL
+
+1. Ajouter la route getAll dans ./routes/reservation.route.js.
+
+```javascript
+router.get('/', reservationController.getAll);
+```
+
+2. Modifier l'intérieur de la fonction dans notre ./reservation.controller.js.
+
+```javascript
+const getAll = async function(_, res) {
+    try {
+        const reservations = await Reservation.findAll()
+        res.status(200).json({ reservations })
+    } catch(error) {
+        res.status(500).json({message: 'Erreur serveur lors de la récupération des réservation'});
+    }
+};
+```
+
+
+☑️ Réservation : POST
+
+1. Ajouter la route post dans ./routes/reservation.route.js.
+
+```javascript
+router.post('/', reservationController.post);
+```
+
+2. Modifier l'intérieur de la fonction dans notre ./reservation.controller.js.
+
+```javascript
+const post = async function(req, res) {
+    try {
+        const reservation = req.body
+       // Vérifier qu'il y a une réservation
+        if (!reservation) {
+        return res.status(400).json({ message: 'La réservation n\'existe pas'})
+        }
+       // Créer la réservation
+        await Reservation.create(reservation);
+    return res.status(200).json({reservation})
+} catch(error) {
+    return res.status(500).json({message: 'Erreur serveur lors de la création d\'une réservation'})
+}
+    };
+```
+
+☑️ Réservation : PUT 
+1. Ajouter la route put dans ./routes/reservation.route.js.
+
+```javascript
+router.put('/:id', reservationController.put);
+```
+
+2. Modifier l'intérieur de la fonction dans notre ./reservation.controller.js.
+
+```javascrpit
+const put = async function(req, res) {
+
+    try {
+    // Trouver une reservation avec son ID
+const id = req.params.id
+
+// Récupérer les informations dans postman
+const { number_of_customers, reservation_date, reservation_name, reservation_note, reservation_status } = req.body
+
+// Chercher la réservation avec l'id
+const reservation = await Reservation.findByPk(id);
+
+// Vérifier qu'il y ai bien une réservation
+if (!reservation) {
+    return res.status(404).json({ message: 'La réservation n\'existe pas'});
+}
+
+// Modifier l'ancienne réservation par la nouvelle
+reservation.number_of_customers = number_of_customers
+reservation.reservation_date = reservation_date
+reservation.reservation_name = reservation_name
+reservation.reservation_note = reservation_note
+reservation.reservation_status = reservation_status
+
+// Sauvegarder la nouvelle réservation
+await reservation.save()
+
+        res.status(200).json({ message: 'La réservation a bien été mise à jour !' });
+    
+        } catch(error) {
+        res.status(500).json({message: 'Erreur serveur lors du traîtement des données'});
+        }
+};
+```
+
+☑️ Réservation : DELETE 
+1. Ajouter la route delete dans ./routes/reservation.route.js. (Attention DELETE n'est pas autorisé ! Utilisez Destroy)
+
+```javascript
+router.delete('/:id', reservationController.destroy);
+```
+
+2. Modifier l'intérieur de la fonction dans notre ./reservation.controller.js.
+
+```javascrpit
+const destroy = async function(req, res) {
+    try {
+        // Récupération de l'id
+        const id = req.params.id
+
+        // Trouver la réservation avec l'id
+        const reservation = await Reservation.findByPk(id);
+
+        // Vérifier si la réservation existe
+        if(!reservation) {
+            return res.status(404).json({ message: `La réservation ${id} n\'existe pas`});
+        }
+
+        // Supprime la réservation
+        const deletedReservation = await reservation.destroy();
+
+        // Vérifier que la réservation est supprimée
+        if(deletedReservation === 0)  {
+            return res.status(404).json({ message: `La réservation ${id} n\'existe pas`})
+        }
+        res.status(200).json({ message: `La réservation ${id} a bien été supprimée !` });
+    } catch(error) {
+        res.status(500).json({ message: 'Erreur lors de la suppression de données !'})
+    } 
+}
+```
