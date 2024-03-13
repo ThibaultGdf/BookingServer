@@ -6,18 +6,12 @@ var spotController = require('../controllers/spot.controller.js')
 router.get('/', spotController.get);
 
 /* POST */
-router.post('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route POST des spots' });
-});
+router.post('/', spotController.post);
 
   /* PUT */
-router.put('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route PUT des spots' });
-});
+router.put('/', spotController.put);
 
   /* DELETE */
-router.delete('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route DELETE des spots' });
-});
+router.delete('/', spotController.destroy);
 
 module.exports = router;

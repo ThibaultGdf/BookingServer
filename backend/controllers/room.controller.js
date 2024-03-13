@@ -10,4 +10,16 @@ const get = async function(req, res) {
     }
 };
 
-module.exports = { get };
+const post = async function(req, res) {
+    res.json({ message: 'Vous êtes sur la route POST des rooms' });
+}
+
+const put = async function(req, res) {
+    res.json({ message: 'Vous êtes sur la route PUT des rooms' });
+}
+
+const destroy = async function(req, res) {
+    res.json({ message: 'Vous êtes sur la route DELETE des rooms' });
+}
+
+module.exports = { get, post, put, destroy };

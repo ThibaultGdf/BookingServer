@@ -6,18 +6,12 @@ var roomController = require('../controllers/room.controller.js')
 router.get('/', roomController.get);
 
 /* POST */
-router.post('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route POST des rooms' });
-});
+router.post('/', roomController.post);
 
   /* PUT */
-router.put('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route PUT des rooms' });
-});
+router.put('/', roomController.put);
 
   /* DELETE */
-router.delete('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route DELETE des rooms' });
-});
+router.delete('/', roomController.destroy);
 
 module.exports = router;

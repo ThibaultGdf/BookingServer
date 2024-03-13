@@ -6,18 +6,12 @@ var reservationController = require('../controllers/reservation.controller.js')
 router.get('/', reservationController.get);
 
 /* POST */
-router.post('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route POST des reservations' });
-});
+router.post('/', reservationController.post);
 
   /* PUT */
-router.put('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route PUT des reservations' });
-});
+router.put('/', reservationController.put);
 
   /* DELETE */
-router.delete('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route DELETE des reservations' });
-});
+router.delete('/', reservationController.destroy);
 
 module.exports = router;

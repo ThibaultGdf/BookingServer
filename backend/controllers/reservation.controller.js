@@ -10,4 +10,25 @@ const get = async function(_, res) {
     }
 };
 
-module.exports = { get };
+const post = async function(req, res) {
+       const reservation = req.body
+    console.log(reservation)
+       // Vérifier qu'il y a une réservation
+       if (!reservation) {
+        return res.status(400).json({ message: 'La réservation n\'existe pas'})
+       }
+
+       // Créer la réservation
+       await Reservation.create(reservation);
+    return res.status(200).json({reservation})
+    }
+
+const put = async function(req, res) {
+        res.json({ message: 'Vous êtes sur la route PUT des reservations' });
+}
+
+const destroy = async function(req, res) {
+        res.json({ message: 'Vous êtes sur la route DELETE des reservations' });
+}
+
+module.exports = { get, post, put, destroy };

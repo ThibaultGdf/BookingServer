@@ -3,7 +3,6 @@ const bcrypt = require("bcryptjs");
 
 const { User } = require('../config/db.js');
 
-
 const SECRET_KEY = process.env.SECRET_KEY;
 
 const signUp = async (req, res) => {
@@ -56,7 +55,7 @@ const signIn = async (req, res) => {
         role: user.user_role
     }
 
-    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '24h' });
 
     res.status(201).json({token: token});
 };
