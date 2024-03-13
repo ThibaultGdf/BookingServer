@@ -18,17 +18,17 @@
 
 | Tâche                                                           | Validée | Lien |
 | --------------------------------------------------------------- | ------- | ---- |
-| Création des dossiers et fichiers Routes (User, Room, Spot...)  | ❌      |      |
-| Création des dossiers et fichiers Modèles (User, Room, Spot...) | ❌      |      |
-| Mise en place des contrôleurs (User, Room, Spot...)             | ❌      |      |
+| Création des dossiers et fichiers Routes (User, Room, Spot...)  | ⏳      |  ./backend/routes    |
+| Création des dossiers et fichiers Modèles (User, Room, Spot...) | ⏳      |   ./backend/models   |
+| Mise en place des contrôleurs (User, Room, Spot...)             | 🟠      |   ./backend/controllers   |
 | 🔜 Implémenter les services                                    | ❌      |      |
 
 ## Sécurité
 
 | Tâche                                                      | Validée | Lien |
 | ---------------------------------------------------------- | ------- | ---- |
-| Sécurité et Authentification                               | ❌      |      |
-| Utiliser bcrypt pour le hashage des mots de passe          | ❌      |      |
+| Sécurité et Authentification                               | ⏳      |      |
+| Utiliser bcrypt pour le hashage des mots de passe          | ⏳      |  ./backend/controllers/auth.controller.js    |
 | Mettre en place l'authentification avec JWT (jsonwebtoken) | ❌      |      |
 
 ## Validation des données

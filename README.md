@@ -952,7 +952,43 @@ const sequelize = new Sequelize(`postgres://${process.env.USER}:${process.env.PA
 
 ☑️ Ajouter le fichier .env dans le .gitignore.
 
-☑️ Ajouter l'access token en environement sur postman.
+☑️ Ajouter access_token en environement sur postman.
 
-☑️ Créer un dossier middlewares avec le fichier authenticate.middleware.js à l'interieur.
+☑️ Créer un dossier middlewares pour protéger nos routes.
+
+☑️ Ajouter le fichier authenticate.middleware.js à l'interieur qui va vérifier si le token est valide.
+
+```javascrpit
+const jwt = require('jsonwebtoken')
+
+const verifyJwt = (req, res, next) => {
+    const SECRET_KEY = process.env.SECRET_KEY
+    const token = req.header('Authorization');
+
+    if(!token) {
+        return res.status(401).json({ auth: false, message: 'No token provided.' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, SECRET_KEY);
+        console.log(decoded);
+        req.user = decoded;
+        next();
+    } catch (error) {
+        res.status(400).json({ auth: false, message: 'Invalid token.' });
+    }
+};
+
+module.exports = { verifyJwt };
+```
+
+☑️ Remplacer le router /api dans le fichier app.js.
+```javascript
+// AVANT
+app.use('/api', indexRouter);
+
+// APRES
+app.use('/api', authenticate.verifyJwt, indexRouter);
+```
+
 
