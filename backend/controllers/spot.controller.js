@@ -1,25 +1,85 @@
 const { Spot } = require('../config/db.js');
 
-const get = async function(req, res) {
+const getAll = async function(req, res) {
     try {
+        // Trouver tous les spots
         const spots = await Spot.findAll()
-        console.log(spots);
         res.status(200).json({ spots })
     } catch(error) {
         res.json(error);
     }
 };
 
+const getOne = async function(req, res) {
+    try {
+                // Récupération de l'id dans postman
+        const id = req.params.id
+                // Trouver le spot par son id
+        const spot = await Spot.findByPk(id)
+
+        // Vérifie si le spot existe
+        if(!spot) {
+            return res.status(404).json({ message: `La room ${id} n'existe pas !`})
+        }
+        res.status(200).json({ spot })
+    } catch(error) {
+        res.status(500).json({ message: `Erreur lors de la récupération d'un spot !` });
+    }
+};
+
 const post = async function(req, res) {
-    res.json({ message: 'Vous êtes sur la route POST des spot' });
-}
+    try {
+               const { spot_name } = req.body
+               const spot = await Spot.create({
+                spot_name
+               })
+        res.status(200).json({ spot });
+    } catch(error) {
+        return res.status(500).json({ message: `Erreur serveur lors de la création d'un spot !`})
+    }
+};
 
 const put = async function(req, res) {
-    res.json({ message: 'Vous êtes sur la route PUT des spot' });
+    try {
+    const id = req.params.id
+    const { spot_name } = req.body
+    const spot = await Spot.findByPk(id)
+
+    // Vérifie qu'il y a bien une room
+    if(!spot) {
+        return res.status(404).json({ message: `Le Spot ${id} n'existe pas`});
+    };
+    
+// Modifier l'ancienne room par la nouvelle
+    spot.spot_name = spot_name
+
+    res.status(200).json({ spot });
+} catch(error) {
+    return res.status(500).json({ message: `Erreur serveur lors de la modification d'un spot !`})
 }
+}
+    
 
 const destroy = async function(req, res) {
-    res.json({ message: 'Vous êtes sur la route DELETE des spot' });
+    try {
+        const id = req.params.id
+
+        const spot = await Spot.findByPk(id)
+
+        if (!spot) {
+            res.status(404).json({ message: `Le Spot ${id} n'existe pas`});
+        }
+
+        const deleteSpot = await spot_name.destroy();
+
+        if (deleteSpot === 0) {
+            return res.status(404).json({ message: `Le spot ${id} n\'existe pas`})
+        }
+
+    res.status(200).json({ message: `Votre spot ${id} a bien été supprimé` });
+} catch(error) {
+    return res.status(500).json({ message: `Erreur serveur lors de la suppession d'un spot !`})
+}
 }
 
-module.exports = { get, post, put, destroy };
+module.exports = { getAll, getOne, post, put, destroy };

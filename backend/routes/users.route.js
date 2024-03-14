@@ -3,15 +3,13 @@ var router = express.Router();
 var userController = require('../controllers/user.controller.js')
 
 /* GET */
-router.get('/', userController.get);
-
-/* POST */
-router.post('/', userController.post);
+router.get('/', userController.getAll);
+router.get('/:id', userController.getOne);
 
   /* PUT */
-router.put('/', userController.put);
+router.put('/:id', userController.put);
 
   /* DELETE */
-router.delete('/', userController.destroy);
+router.delete('/:id', userController.destroy);
 
 module.exports = router;

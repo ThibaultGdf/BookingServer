@@ -3,15 +3,16 @@ var router = express.Router();
 var spotController = require('../controllers/spot.controller.js')
 
 /* GET */
-router.get('/', spotController.get);
+router.get('/', spotController.getAll);
+router.get('/:id', spotController.getOne);
 
 /* POST */
 router.post('/', spotController.post);
 
   /* PUT */
-router.put('/', spotController.put);
+router.put('/:id', spotController.put);
 
   /* DELETE */
-router.delete('/', spotController.destroy);
+router.delete('/:id', spotController.destroy);
 
 module.exports = router;
