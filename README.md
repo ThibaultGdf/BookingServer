@@ -1297,3 +1297,123 @@ router.delete('/:id', roomController.destroy);
 
 module.exports = router;
 ```
+
+## Installer les logs
+
+1. Créer un dossier /log.
+
+2. Créer un fichier /.gitkeep dans le fichier /log
+
+3. Ajouter logs/*.log dans le fichier .gitignore.
+
+4. Créer le dossier utils à la racine du projet.
+
+5. Créer le fichier /logger.js dans le dossier /utils.
+
+6. Installer winston.
+
+```bash
+npm install winston
+```
+
+7. Ajouter le code ci-dessous dans le fichier /utils/logger.js.
+
+```javascript
+const winston = require('winston');
+
+// Le niveau définira ce qui sera affiché
+const levels = {
+    error: 0,
+    warn: 1,
+    info: 2,
+    http: 3,
+    debug: 4,
+}
+
+// Detemine le niveau debug ou warn
+const level = () => {
+    const env = process.env.DEBUG || 'development'
+    const isDevelopment = env === 'development'
+    return isDevelopment ? 'debug' : 'warn'
+}
+
+// Couleurs choisies pour chaque élément
+const colors = {
+    error: 'red',
+    warn: 'yellow',
+    info: 'green',
+    http: 'magenta',
+    debug: 'white',
+} 
+
+winston.addColors(colors)
+
+// Type de format, vous pouvez le modifier
+const format = winston.format.combine(
+    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms'}),
+    winston.format.colorize({ all: true }),
+    winston.format.printf(
+        (info) => `${info.timestamp} [${info.level}] ${info.message}`,
+    ),
+);
+
+const transports = [
+    new winston.transports.Console(),
+    new winston.transports.File({
+        filename: 'logs/error.log',
+        level: 'error'
+    }),
+    new winston.transports.File({ filename: 'logs/all.log' }),
+]
+
+const logger = winston.createLogger({
+    level: level(),
+    levels,
+    format,
+    transports,
+})
+
+module.exports = logger
+```
+
+7. Créer le fichier /morgan.middleware.js dans le dossier /middlewares.
+
+8. Ajouter le code ci-dessous dans le fichier /morgan.middleware.
+```javascript
+   // morgan.middleware.js
+const morgan = require("morgan");
+const logger = require("../utils/logger");
+
+const stream = {
+// Use the http severity
+  write: (message) => logger.http(message),
+};
+
+const skip = () => {
+  const env = process.env.NODE_ENV || "development";
+  return env !== "development";
+};
+
+const morganMiddleware = morgan(
+":remote-addr :method :url :status :res[content-length] - :response-time ms",
+  { stream, skip }
+);
+
+module.exports = morganMiddleware;
+   ```
+10. Importer morganMiddleware et logger dans le fichier app.
+```javascript
+const morganMiddleware = require("./middlewares/morgan.middleware");
+const logger = require("./utils/logger");
+```
+11. Supprimer les lignes de code ci-dessous dans le fichier app.js.
+```javascript
+// const logger = require('morgan'); A supprimer
+// app.use(logger('dev')); A supprimer
+```
+12. Ajouter dans app.js.
+```javascript
+app.use(morganMiddleware);
+
+logger.http('Debut session')
+```
