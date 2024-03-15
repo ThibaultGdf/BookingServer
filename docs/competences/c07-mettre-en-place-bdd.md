@@ -16,7 +16,7 @@
 
 | Tâche                                                | Validée | Validation |
 | ---------------------------------------------------- | :-----: | ---------- |
-| Setup indiqué dans la documentation                  |   🟠    |      Ajouter un fichier read.ME qui permet de télécharger le projet, code, etc    |
+| Setup indiqué dans la documentation                  |   ⏳    |            |
 | Fichier et dossier modèle                            |   ✅    |            |
 | Génération de seed automatisée                       |   ✅    |            |
 | Implémentation de différence base (dev/test/preprod) |   ✅    |            |
@@ -26,15 +26,15 @@
 
 | Tâche               | Validée | Validation |
 | ------------------- | :-----: | ---------- |
-| Nommage des modèles |   🟠    |     Nommer les modèles de la même façon       |
+| Nommage des modèles |   ✅    |            |
 
 ## Accès
 
 | Tâche                                                 | Validée | Validation |
 | ----------------------------------------------------- | :-----: | ---------- |
 | Authentification                                      |   ✅    |            |
-| Autorisation d’accès                                  |   🟠    |      isAdmin      |
-| Assurer le Contrôle d'Accès Basé sur les Rôles (RBAC) |   🟠    |      isAdmin      |
+| Autorisation d’accès                                  |   ⏳    |      isAdmin      |
+| Assurer le Contrôle d'Accès Basé sur les Rôles (RBAC) |   ⏳    |      isAdmin      |
 
 ## Logs
 

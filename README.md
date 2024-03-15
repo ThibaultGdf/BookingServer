@@ -1,5 +1,68 @@
 # PROJET : BookingServer
 
+## Setup du projet
+1. Installation du projet.
+```javascript
+git clone https://github.com/ThibaultGdf/BookingServer.git
+```
+
+2. Installation des dépendances.
+```bash
+cd BookingServer/backend
+npm install
+```
+3. Création du fichier env et son contenu.
+```bash
+echo -e "PORT=your_port
+DEV_DB_USER=your_user
+DEV_DB_PASSWORD=your_password
+DEV_DB_NAME=your_db_name
+DEV_DB_HOST=5432
+
+TEST_DB_USER=your_user
+TEST_DB_PASSWORD=your_password
+TEST_DB_NAME=your_db_name
+TEST_DB_HOST=5432
+
+PROD_DB_USER=your_user
+PROD_DB_PASSWORD=your_password
+PROD_DB_NAME=your_db_name
+PROD_DB_HOST=5432
+DB_NAME_PROD=database_production" > ".env"
+```
+
+4. Créer la base de donnée
+```bash
+npx sequelize-cli db:create
+```
+
+ 5. Migrer les données dans la base de donnée
+```bash
+npx sequelize db:migrate
+
+```
+
+6. Envoyer les seeders dans la base de donnée
+
+```bash
+npx sequelize db:seed:all
+```
+
+7. Remplacer la ligne de code dans notre fichier /config/db.js.
+```bash
+AVANT
+const sequelize = new Sequelize("postgres://${process.env.DEV_DB_USER}:${process.env.DEV_DB_PASSWORD}@${process.env.DEV_DB_HOST}:${process.env.PORT_DB}/${process.env.DEV_DB_NAME}");
+
+APRES
+const sequelize = new Sequelize(`postgres://${process.env.DEV_DB_USER}:${process.env.DEV_DB_PASSWORD}@${process.env.DEV_DB_HOST}:${process.env.PORT_DB}/${process.env.DEV_DB_NAME}`);
+
+```
+7. Lancer le serveur
+```bash
+npm run start
+```
+
+
 ## Initialisation du serveur
 
 ☑️ Créer un dossier projet.
@@ -248,32 +311,37 @@ sequelize init
 npm install --save pg pg-hstore
 ```
 
+☑️ Renommer le fichier config.json par config.js
+
 ☑️ Modifier le fichier config.js
 
 ```javascript
-{
-  "development": {
-    "username": "thibaultgodefroy",
-    "password": "password",
-    "database": "bookingserver_development",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+require("dotenv").config();
+
+module.exports = {
+  development: {
+    username: process.env.DEV_DB_USER,
+    password: process.env.DEV_DB_PASSWORD,
+    database: process.env.DEV_DB_NAME,
+    host: process.env.DEV_DB_HOST,
+    dialect: "postgres",
   },
-  "test": {
-    "username": "thibaultgodefroy",
-    "password": "password",
-    "database": "bookingserver_test",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+  test: {
+    username: process.env.TEST_DB_USER,
+    password: process.env.TEST_DB_PASSWORD,
+    database: process.env.TEST_DB_NAME,
+    host: process.env.TEST_DB_HOST,
+    dialect: "postgres",
   },
-  "production": {
-    "username": "thibaultgodefroy",
-    "password": "password",
-    "database": "bookingserver_production",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
-  }
-}
+  production: {
+    username: process.env.PROD_DB_USER,
+    password: process.env.PROD_DB_PASSWORD,
+    database: process.env.PROD_DB_NAME,
+    host: process.env.PROD_DB_HOST,
+    dialect: "postgres",
+  },
+};
+
 ```
 
 ☑️ Créer un fichier db.js à la racine du projet.
