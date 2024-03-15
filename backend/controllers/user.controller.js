@@ -29,7 +29,7 @@ const put = async function(req, res) {
 // Trouver une reservation avec son ID
         const id = req.params.id
 // Récupérer les informations dans postman
-        const { firstName, lastName, email, user_password } = req.body
+        const { firstname, lastname, email, user_password } = req.body
 // Chercher la réservation avec l'id
         const user = await User.findByPk(id)
 // Vérifier qu'il y ai bien un utilisateur
@@ -38,8 +38,8 @@ const put = async function(req, res) {
         }
 
 // Modifier l'ancienne valeur par la nouvelle
-        user.firstName = firstName
-        user.lastName = lastName
+        user.firstname = firstname
+        user.lastname = lastname
         user.email = email
         user.user_password = user_password
 

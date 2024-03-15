@@ -331,7 +331,7 @@ npx sequelize-cli model:generate --name Spot --attributes spot_name:string
 ☑️ Créer le model User
 
 ```bash
-npx sequelize model:generate --name User --attributes firstName:string,lastName:string,email:string,user_role:string,user_password:string
+npx sequelize model:generate --name User --attributes firstname:string,lastname:string,email:string,user_role:string,user_password:string
 ```
 
 ☑️ Migrer les models dans la base de donnée
@@ -431,8 +431,8 @@ module.exports = {
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Users', [{
-      firstName: "Alex",
-      lastName: "Zerah",
+      firstname: "Alex",
+      lastname: "Zerah",
       email: "pro@alexzerah.com",
       user_role: "client",
       user_password: "password en attente de hashage",
@@ -697,8 +697,8 @@ app.use('/api', indexRouter);
 router.post('/signup', (req, res) => {
 
 const user = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
     email: req.body.email,
     user_role: req.body.role,
     user_password: req.body.password,
@@ -723,13 +723,13 @@ const user = {
 router.post('/signup', async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
-    const { firstName, lastName, email } = req.body
+    const { firstname, lastname, email } = req.body
     const user_password = req.body.password
     const hashedPassword = await bcrypt.hash(user_password, salt);
 
     const user = {
-        firstName: firstName,
-        lastName: lastName,
+        firstname: firstname,
+        lastname: lastname,
         email: email,
         user_role: "customer",
         user_password: hashedPassword,
@@ -762,15 +762,15 @@ const { User } = require('../config/db.js');
 const signUp = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
 
-    const { firstName, lastName, email } = req.body
+    const { firstname, lastname, email } = req.body
     const user_password = req.body.password
 
     const hashedPassword = await bcrypt.hash(user_password, salt);
     
 
     const user = {
-        firstName: firstName,
-        lastName: lastName,
+        firstname: firstname,
+        lastname: lastname,
         email: email,
         user_role: "customer",
         user_password: hashedPassword,
@@ -858,15 +858,15 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const signUp = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
 
-    const { firstName, lastName, email } = req.body
+    const { firstname, lastname, email } = req.body
     const user_password = req.body.password
 
     const hashedPassword = await bcrypt.hash(user_password, salt);
     
 
     const user = {
-        firstName: firstName,
-        lastName: lastName,
+        firstname: firstname,
+        lastname: lastname,
         email: email,
         user_role: "client",
         user_password: hashedPassword,

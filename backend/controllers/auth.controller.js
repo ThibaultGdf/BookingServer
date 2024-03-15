@@ -8,14 +8,14 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const signUp = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
 
-    const { firstName, lastName, email } = req.body
+    const { firstname, lastname, email } = req.body
     const user_password = req.body.password
 
     const hashedPassword = await bcrypt.hash(user_password, salt);
 
     const user = {
-        firstName: firstName,
-        lastName: lastName,
+        firstname: firstname,
+        lastname: lastname,
         email: email,
         user_role: "client",
         user_password: hashedPassword,
