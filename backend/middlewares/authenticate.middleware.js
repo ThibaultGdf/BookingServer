@@ -17,4 +17,13 @@ const verifyJwt = (req, res, next) => {
     }
 };
 
-module.exports = { verifyJwt };
+const isAdmin = (req, res, next) => {
+ if (req.user && req.user.role === "admin") {
+    next();
+ } else {
+    console.log(req.user);
+    res.status(403).json({ message: 'Unauthorized : Accès non autorisé !'})
+ }
+}
+
+module.exports = { verifyJwt, isAdmin };

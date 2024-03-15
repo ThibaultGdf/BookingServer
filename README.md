@@ -1,5 +1,65 @@
 # PROJET : BookingServer
 
+## Arborescence du projet :
+.
+├── BOOKINGSERVER
+│   ├── backend
+│   │   ├── bin
+│   │   │   └── www
+│   │   ├── config
+│   │   │   ├── config.js
+│   │   │   └── db.js
+│   │   ├── controllers
+│   │   │   ├── auth.controller.js
+│   │   │   ├── reservation.controller.js
+│   │   │   ├── room.controller.js
+│   │   │   ├── spot.controller.js
+│   │   │   └── user.controller.js
+│   │   ├── logs
+│   │   │   ├── .gitkeep
+│   │   │   ├── all.log
+│   │   │   └── error.log
+│   │   ├── middlewares
+│   │   │   ├── authenticate.middleware.js
+│   │   │   └── morgan.middleware.js
+│   │   ├── migrations
+│   │   │   ├── 20240311131908-create-user.js
+│   │   │   ├── 20240311131939-create-reservation.js
+│   │   │   ├── 20240311131946-create-room.js
+│   │   │   └── 20240311131952-create-spot.js
+│   │   ├── models
+│   │   │   ├── index.js
+│   │   │   ├── reservation.js
+│   │   │   ├── room.js
+│   │   │   ├── spot.js
+│   │   │   └── user.js
+│   │   ├── routes
+│   │   │   ├── auth.route.js
+│   │   │   ├── index.route.js
+│   │   │   ├── reservations.route.js
+│   │   │   ├── rooms.route.js
+│   │   │   ├── spots.route.js
+│   │   │   └── users.route.js
+│   │   ├── seeders
+│   │   │   ├── 20240311133002-user.js
+│   │   │   ├── 20240311133053-reservation.js
+│   │   │   ├── 20240311133100-spot.js
+│   │   │   └── 20240311133106-room.js
+│   │   ├── utils
+│   │   │   └── logger.js
+│   │   ├── .env
+│   │   ├── app.js
+│   │   ├── package-lock.json
+│   │   └── package.json
+│   ├── docs
+│   │   └── ...
+│   ├── frontendWebBookingServer
+│   │   └── ...
+│   ├── .gitignore
+│   └── README.md
+├── node_modules
+└── ...
+
 ## Setup du projet
 1. Installation du projet.
 ```javascript
@@ -1368,23 +1428,23 @@ module.exports = router;
 
 ## Installer les logs
 
-1. Créer un dossier /log.
+[x] Créer un dossier /log.
 
-2. Créer un fichier /.gitkeep dans le fichier /log
+[x] Créer un fichier /.gitkeep dans le fichier /log
 
-3. Ajouter logs/*.log dans le fichier .gitignore.
+[x] Ajouter logs/*.log dans le fichier .gitignore.
 
-4. Créer le dossier utils à la racine du projet.
+[x] Créer le dossier utils à la racine du projet.
 
-5. Créer le fichier /logger.js dans le dossier /utils.
+[x] Créer le fichier /logger.js dans le dossier /utils.
 
-6. Installer winston.
+[x] Installer winston.
 
 ```bash
 npm install winston
 ```
 
-7. Ajouter le code ci-dessous dans le fichier /utils/logger.js.
+[x] Ajouter le code ci-dessous dans le fichier /utils/logger.js.
 
 ```javascript
 const winston = require('winston');
@@ -1444,9 +1504,9 @@ const logger = winston.createLogger({
 module.exports = logger
 ```
 
-7. Créer le fichier /morgan.middleware.js dans le dossier /middlewares.
+[x] Créer le fichier /morgan.middleware.js dans le dossier /middlewares.
 
-8. Ajouter le code ci-dessous dans le fichier /morgan.middleware.
+[x] Ajouter le code ci-dessous dans le fichier /morgan.middleware.
 ```javascript
    // morgan.middleware.js
 const morgan = require("morgan");
@@ -1469,26 +1529,91 @@ const morganMiddleware = morgan(
 
 module.exports = morganMiddleware;
    ```
-10. Importer morganMiddleware et logger dans le fichier app.
+[x] Importer morganMiddleware et logger dans le fichier app.
 ```javascript
 const morganMiddleware = require("./middlewares/morgan.middleware");
 const logger = require("./utils/logger");
 ```
-11. Supprimer les lignes de code ci-dessous dans le fichier app.js.
+[x] Supprimer les lignes de code ci-dessous dans le fichier app.js.
 ```javascript
 // const logger = require('morgan'); A supprimer
 // app.use(logger('dev')); A supprimer
 ```
-12. Ajouter dans app.js.
+[x] Ajouter dans app.js.
 ```javascript
 app.use(morganMiddleware);
 
 logger.http('Debut session')
 ```
 
-// Installer l'extension
+[x] Installer l'extension suivante dans Visual Studio Code.
+```bash
 ANSI Colors
+```
 
-// Aller sur le fichier log et COMMAND SHIFT P 
+[x] Aller sur le fichier log et COMMAND SHIFT P 
 
-// Marquer Ansi et Open Preview
+[x] Marquer Ansi et Open Preview (Lorsque nous quittons la fenêtre, la couleur s'enlève)
+
+## Rôles
+
+[ ] Ajouter le rôle administrateur dans le middlewares/authenticate.middleware.js.
+```javascript
+const isAdmin = (req, res, next) => {
+ if (req.user && req.user.role === "admin") {
+    next();
+ } else {
+    console.log(req.user);
+    res.status(403).json({ message: 'Unauthorized : Accès non autorisé !'})
+ }
+}
+
+module.exports = { verifyJwt, isAdmin };
+````
+
+[x] Protéger les routes dans lesquels nous souhaitons avoir le rôle administrateur. 
+
+```javascript
+var authenticateMiddleware = require('../middlewares/authenticate.middleware.js');
+
+AVANT 
+router.get('/', reservationController.getAll);
+
+APRES
+router.get('/', authenticateMiddleware.isAdmin, reservationController.getAll);
+```
+
+[x] Ajouter la route pour éditer le rôle d'un utilisateur.
+
+```javascript
+var authenticateMiddleware = require('../middlewares/authenticate.middleware.js')
+
+router.put('/editRole/:id', authenticateMiddleware.isAdmin, userController.editRole);
+```
+
+[x] Ajouter son controller dans /controllers/user.controller.js.
+```javascript
+const editRole = async function(req, res) {
+try {
+    const id = req.params.id
+    const user = await User.findByPk(id);
+
+    if (!user) {
+        return res.status(404).json({message: `L'utilisateur n'existe pas !`})
+    }
+
+    user.user_role = req.body.role
+
+    await user.save();
+
+    res.status(200).json({message: `Le rôle a bien été modifié à l'utilisateur ${id}`})
+} catch(error) {
+    return res.status(500).json({message: `Erreur serveur lors de la modification d'un rôle !`})
+}
+}
+```
+
+[x] Exporter la fonction
+```javascript
+module.exports = { editRole };
+```

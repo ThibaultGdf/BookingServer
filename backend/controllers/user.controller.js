@@ -23,7 +23,24 @@ const getOne = async function(req, res) {
         res.status(500).json({ message: `Erreur serveur lors de la récupération d'un utilisateur !`})
     }
 };
+const editRole = async function(req, res) {
+try {
+    const id = req.params.id
+    const user = await User.findByPk(id);
 
+    if (!user) {
+        return res.status(404).json({message: `L'utilisateur n'existe pas !`})
+    }
+
+    user.user_role = req.body.role
+
+    await user.save();
+
+    res.status(200).json({message: `Le rôle a bien été modifié à l'utilisateur ${id}`})
+} catch(error) {
+    return res.status(500).json({message: `Erreur serveur lors de la modification d'un rôle !`})
+}
+}
 const put = async function(req, res) {
     try {    
 // Trouver une reservation avec son ID
@@ -50,7 +67,6 @@ const put = async function(req, res) {
     } catch(error) {
         return  res.status(500).json({ message: `Erreur serveur lors de la modification d'un utilisateur !` });
     }
-  
 }
 
 const destroy = async function(req, res) {
@@ -75,4 +91,4 @@ const destroy = async function(req, res) {
     }
 }
 
-module.exports = { getAll, getOne, put, destroy };
+module.exports = { getAll, getOne, editRole, put, destroy };
