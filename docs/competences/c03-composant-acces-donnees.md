@@ -18,18 +18,18 @@
 
 | Tâche                                                           | Validée | Lien |
 | --------------------------------------------------------------- | ------- | ---- |
-| Création des dossiers et fichiers Routes (User, Room, Spot...)  | ⏳      |  ./backend/routes    |
-| Création des dossiers et fichiers Modèles (User, Room, Spot...) | ⏳      |   ./backend/models   |
-| Mise en place des contrôleurs (User, Room, Spot...)             | 🟠      |   ./backend/controllers   |
+| Création des dossiers et fichiers Routes (User, Room, Spot...)  | ✅      |  ./backend/routes    |
+| Création des dossiers et fichiers Modèles (User, Room, Spot...) | ✅      |   ./backend/models   |
+| Mise en place des contrôleurs (User, Room, Spot...)             | ✅      |   ./backend/controllers   |
 | 🔜 Implémenter les services                                    | ❌      |      |
 
 ## Sécurité
 
 | Tâche                                                      | Validée | Lien |
 | ---------------------------------------------------------- | ------- | ---- |
-| Sécurité et Authentification                               | ⏳      |      |
-| Utiliser bcrypt pour le hashage des mots de passe          | ⏳      |  ./backend/controllers/auth.controller.js    |
-| Mettre en place l'authentification avec JWT (jsonwebtoken) | ❌      |      |
+| Sécurité et Authentification                               | ✅      |      |
+| Utiliser bcrypt pour le hashage des mots de passe          | ✅      |  ./backend/controllers/auth.controller.js    |
+| Mettre en place l'authentification avec JWT (jsonwebtoken) | ✅      |      |
 
 ## Validation des données
 
@@ -37,8 +37,8 @@
 | --------------------------------------------------------------- | ------- | ---- |
 | 🔜 Intégrer express-validator pour la validation des données   | ❌      |      |
 | 🔜 Nettoyer les données entrantes pour prévenir les injections | ❌      |      |
-| Établir une nomenclature cohérente pour le code                 | ❌      |      |
-| Commenter et expliquer les segments de code complexes           | ❌      |      |
+| Établir une nomenclature cohérente pour le code                 | ✅      |      |
+| Commenter et expliquer les segments de code complexes           | ✅      |      |
 
 ## Base de données
 

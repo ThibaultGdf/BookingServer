@@ -1417,3 +1417,10 @@ app.use(morganMiddleware);
 
 logger.http('Debut session')
 ```
+
+// Installer l'extension
+ANSI Colors
+
+// Aller sur le fichier log et COMMAND SHIFT P 
+
+// Marquer Ansi et Open Preview
