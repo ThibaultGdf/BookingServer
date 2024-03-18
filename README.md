@@ -1,6 +1,7 @@
 # PROJET : BookingServer
 
 ## Arborescence du projet :
+```
 .
 ├── BOOKINGSERVER
 │   ├── backend
@@ -59,7 +60,7 @@
 │   └── README.md
 ├── node_modules
 └── ...
-
+```
 ## Setup du projet
 1. Installation du projet.
 ```javascript
@@ -99,7 +100,6 @@ npx sequelize-cli db:create
  5. Migrer les données dans la base de donnée
 ```bash
 npx sequelize db:migrate
-
 ```
 
 6. Envoyer les seeders dans la base de donnée
@@ -441,27 +441,31 @@ try {
 ☑️ Créer le model Reservation
 
 ```bash
-npx sequelize-cli model:generate --name Reservation --attributes number_of_customers:integer,reservation_date:date,reservation_name:string,reservation_note:string,reservation_status:integer
+npx sequelize-cli model:generate --name Reservation --attributes number_of_customers:integer,date:date,name:string,note:string,status:integer
 ```
 
 ☑️ Créer le model Room
 
 ```bash
-npx sequelize-cli model:generate --name Room --attributes room_name:string
+npx sequelize-cli model:generate --name Room --attributes name:string
 ```
 
 ☑️ Créer le model Spot
 
 ```bash
-npx sequelize-cli model:generate --name Spot --attributes spot_name:string
+npx sequelize-cli model:generate --name Spot --attributes name:string
 ```
 
 ☑️ Créer le model User
 
 ```bash
-npx sequelize model:generate --name User --attributes firstname:string,lastname:string,email:string,user_role:string,user_password:string
+npx sequelize model:generate --name User --attributes first_name:string,last_name:string,email:string,role:string,password:string
 ```
+☑️ Créer le model Membership
 
+```bash
+npx sequelize-cli model:generate --name Membership --attributes name:string,number_of_reservations:integer,expiration_date:date
+```
 ☑️ Migrer les models dans la base de donnée
 
 ```bash
@@ -1617,3 +1621,62 @@ try {
 ```javascript
 module.exports = { editRole };
 ```
+
+
+// AJOUTER PRETTIER :
+
+1. Installer le package.
+```javascript
+npm install --save-dev --save-exact prettier
+```
+
+2. Créer un fichier de configuration `.prettierrc` et ajouter son contenu à l'intérieur.
+```javascript
+node --eval "fs.writeFileSync('.prettierrc','{}\n')"
+```
+
+```javascript
+ "tabWidth": 4,
+```
+
+3. Créer un fichier `.prettierignore`.
+```javascript
+touch .prettierignore
+```
+
+4. Ajouter le contenu dans le fichier `.prettierignore`.
+```javascript
+# Ignore artifacts:
+build
+coverage
+```
+
+5. Formatter tous les fichiers.
+```bash
+npx prettier . --write
+```
+
+// AJOUTER ESLint :
+
+1. Installer ESLint
+```bash
+npm i eslint
+```
+
+2. Configurer ESLint en l'initialisant.
+```bash
+npm init @eslint/config
+```
+
+3. Etapes de configuration
+1. ❯ To check syntax, find problems, and enforce code style
+2. ❯ JavaScript modules (import/export)
+3. ❯ None of these
+4. ? Does your project use TypeScript? › No
+5. ✔ Node
+6. ❯ Use a popular style guide
+7. ❯ Standard: https://github.com/standard/standard
+8. ❯ JavaScript
+9. ❯ No
+10. ❯ Yes
+11. ❯ npm

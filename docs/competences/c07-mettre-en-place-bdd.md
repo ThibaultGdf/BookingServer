@@ -16,28 +16,28 @@
 
 | Tâche                                                | Validée | Validation |
 | ---------------------------------------------------- | :-----: | ---------- |
-| Setup indiqué dans la documentation                  |   ⏳    |            |
-| Fichier et dossier modèle                            |   ✅    |            |
-| Génération de seed automatisée                       |   ✅    |            |
-| Implémentation de différence base (dev/test/preprod) |   ✅    |            |
-| Fichier de config + .env éventuellement              |   ✅    |            |
+| Setup indiqué dans la documentation                  |   ✅    |    [Projet](https://github.com/ThibaultGdf/BookingServer)        |
+| Fichier et dossier modèle                            |   ✅    |     /models + /migrations      |
+| Génération de seed automatisée                       |   ✅    |     /seeders       |
+| Implémentation de différence base (dev/test/preprod) |   ✅    |     ??       |
+| Fichier de config + .env éventuellement              |   ✅    |      /config + .env      |
 
 ## Convention
 
 | Tâche               | Validée | Validation |
 | ------------------- | :-----: | ---------- |
-| Nommage des modèles |   ✅    |            |
+| Nommage des modèles |   ✅    |     /models       |
 
 ## Accès
 
 | Tâche                                                 | Validée | Validation |
 | ----------------------------------------------------- | :-----: | ---------- |
-| Authentification                                      |   ✅    |            |
-| Autorisation d’accès                                  |   ⏳    |      isAdmin      |
-| Assurer le Contrôle d'Accès Basé sur les Rôles (RBAC) |   ⏳    |      isAdmin      |
+| Authentification                                      |   ✅    |      /auth.controller.js      |
+| Autorisation d’accès                                  |   ✅    |      /auth.route.js      |
+| Assurer le Contrôle d'Accès Basé sur les Rôles (RBAC) |   ✅    |      /auth.controller.js      |
 
 ## Logs
 
 | Tâche                                  | Validée | Validation |
 | -------------------------------------- | :-----: | ---------- |
-| - Utilisation de Morgan et Winston     |   ✅    |            |
+| - Utilisation de Morgan et Winston     |   ✅    |      /logs      |

@@ -16,17 +16,17 @@
 | Tâche                                                   | Validée | Validation |
 | ------------------------------------------------------- | :-----: | ---------- |
 | Utilisation d'Express Validator                         |   ❌    |            |
-| Intégration de bcrypt pour le hashage des mots de passe |   ✅    |            |
+| Intégration de bcrypt pour le hashage des mots de passe |   ✅    |      /auth.controller.js      |
 | Sanitisation avec Joi                                   |   ❌    |            |
 | Accès aux données restreint par rôle                    |   ❌    |            |
-| Implémentation du champ updatedAt dans les modèles      |   ✅    |            |
-| Utilisation de try/catch pour la gestion d'erreurs      |   ✅    |            |
+| Implémentation du champ updatedAt dans les modèles      |   ✅    |    /models        |
+| Utilisation de try/catch pour la gestion d'erreurs      |   ✅    |      /controllers      |
 
 ## Logs
 
 | Tâche                                                    | Validée | Validation |
 | -------------------------------------------------------- | :-----: | ---------- |
-| Configuration et utilisation des logs (Morgan + Winston) |   ✅    |            |
+| Configuration et utilisation des logs (Morgan + Winston) |   ✅    |     /logs       |
 
 ## Tests
 

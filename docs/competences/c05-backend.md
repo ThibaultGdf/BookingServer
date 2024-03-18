@@ -23,8 +23,8 @@
 
 | Tâches       | Statut | Validation |
 | ------------ | ------ | ---------- |
-| Route        | ✅     |            |
-| Controller   | ✅     |            |
+| Route        | ✅     |     /routes       |
+| Controller   | ✅     |      /controllers      |
 | 🔜 Services | ❌     |            |
 
 ## POO
@@ -38,12 +38,12 @@
 
 | Tâches              | Statut | Validation |
 | ------------------- | ------ | ---------- |
-| Authentification    | ✅     |            |
-| Authorisation       | 🟠     |      Gestion des rôles      |
-| Sign in             | ✅     |            |
-| Sign up             | ✅     |            |
-| bcrypt              | ✅     |            |
-| jwt                 | ✅     |            |
+| Authentification    | ✅     |      /controllers/auth.controller.js       |
+| Authorisation       | ⏳     |      /middlewares/authenticate.middleware.js      |
+| Sign in             | ✅     |      /controllers/auth.controller.js      |
+| Sign up             | ✅     |      /controllers/auth.controller.js      |
+| bcrypt              | ✅     |      /controllers/auth.controller.js      |
+| jwt                 | ✅     |      /middlewares/authenticate.middleware.js      |
 | Mot de passe oublié | ❌     |            |
 
 ## Outils, méthodes et docs
