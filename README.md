@@ -100,7 +100,6 @@ npx sequelize-cli db:create
  5. Migrer les données dans la base de donnée
 ```bash
 npx sequelize db:migrate
-
 ```
 
 6. Envoyer les seeders dans la base de donnée
