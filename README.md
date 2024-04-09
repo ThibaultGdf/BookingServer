@@ -1,7 +1,7 @@
 # PROJET : BookingServer
 
 ## Arborescence du projet :
-
+```
 .
 ├── BOOKINGSERVER
 │ ├── backend
@@ -60,6 +60,8 @@
 │ └── README.md
 ├── node_modules
 └── ...
+```
+
 
 ## Setup du projet
 
