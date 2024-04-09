@@ -1712,3 +1712,53 @@ const editRole = async function (req, res) {
 ```javascript
 module.exports = { editRole };
 ```
+
+# AJOUTER PRETTIER : 
+
+1. Installer prettier
+```bash
+npm install --save-dev --save-exact prettier
+```
+
+<br>
+
+2. Créer le fichier `prettierrc`.
+```bash
+node --eval "fs.writeFileSync('.prettierrc','{}\n')"
+```
+
+<br>
+
+3. Configurer le fichier `prettierrc`.
+```javascript
+{
+    "tabWidth": 4
+}
+```
+
+<br>
+
+4. Créer le fichier `.prettierignore`.
+```javascript
+# Ignore artifacts:
+build
+coverage
+```
+
+<br>
+
+5. Dans le fichier `package.json`, ajouter le raccourci `prettier`.
+
+```javascript
+"scripts": {
+        "start": "node --env-file .env --watch ./bin/www",
+        "prettier": "npx prettier . --write"
+    },
+```
+
+<br>
+
+6. Lancer la commande pour ranger son code.
+```bash
+npm run prettier
+```
