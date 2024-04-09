@@ -16,46 +16,46 @@
 
 ## Routes, modeles, contrôleurs et services
 
-| Tâche                                                           | Validée | Lien |
-| --------------------------------------------------------------- | ------- | ---- |
-| Création des dossiers et fichiers Routes (User, Room, Spot...)  | ✅      |  ./backend/routes    |
-| Création des dossiers et fichiers Modèles (User, Room, Spot...) | ✅      |   ./backend/models   |
-| Mise en place des contrôleurs (User, Room, Spot...)             | ✅      |   ./backend/controllers   |
-| 🔜 Implémenter les services                                    | ❌      |      |
+| Tâche                                                           | Validée | Lien                  |
+| --------------------------------------------------------------- | ------- | --------------------- |
+| Création des dossiers et fichiers Routes (User, Room, Spot...)  | ✅      | ./backend/routes      |
+| Création des dossiers et fichiers Modèles (User, Room, Spot...) | ✅      | ./backend/models      |
+| Mise en place des contrôleurs (User, Room, Spot...)             | ✅      | ./backend/controllers |
+| 🔜 Implémenter les services                                     | ❌      |                       |
 
 ## Sécurité
 
-| Tâche                                                      | Validée | Lien |
-| ---------------------------------------------------------- | ------- | ---- |
-| Sécurité et Authentification                               | ✅      |      |
-| Utiliser bcrypt pour le hashage des mots de passe          | ✅      |  ./backend/controllers/auth.controller.js    |
-| Mettre en place l'authentification avec JWT (jsonwebtoken) | ✅      |      |
+| Tâche                                                      | Validée | Lien                                     |
+| ---------------------------------------------------------- | ------- | ---------------------------------------- |
+| Sécurité et Authentification                               | ✅      |                                          |
+| Utiliser bcrypt pour le hashage des mots de passe          | ✅      | ./backend/controllers/auth.controller.js |
+| Mettre en place l'authentification avec JWT (jsonwebtoken) | ✅      |                                          |
 
 ## Validation des données
 
-| Tâche                                                           | Validée | Lien |
-| --------------------------------------------------------------- | ------- | ---- |
+| Tâche                                                          | Validée | Lien |
+| -------------------------------------------------------------- | ------- | ---- |
 | 🔜 Intégrer express-validator pour la validation des données   | ❌      |      |
 | 🔜 Nettoyer les données entrantes pour prévenir les injections | ❌      |      |
-| Établir une nomenclature cohérente pour le code                 | ✅      |      |
-| Commenter et expliquer les segments de code complexes           | ✅      |      |
+| Établir une nomenclature cohérente pour le code                | ✅      |      |
+| Commenter et expliquer les segments de code complexes          | ✅      |      |
 
 ## Base de données
 
 | Tâche                                                | Validée | Lien |
 | ---------------------------------------------------- | ------- | ---- |
-| 🔜 Concevoir le schéma de base de données           | ❌      |      |
-| Créer les tables et relations conformément au schéma | ⏳      |      |
+| 🔜 Concevoir le schéma de base de données            | ❌      |      |
+| Créer les tables et relations conformément au schéma | ❌      |      |
 
 ## Tests
 
-| Tâche                                                                   | Validée | Lien |
-| ----------------------------------------------------------------------- | ------- | ---- |
+| Tâche                                                                  | Validée | Lien |
+| ---------------------------------------------------------------------- | ------- | ---- |
 | 🔜 Définir une matrice de test pour couvrir toutes les fonctionnalités | ❌      |      |
 | 🔜 Implémenter les tests unitaires et d'intégration                    | ❌      |      |
 
 ## Documentation API
 
-| Tâche                                               | Validée | Lien |
-| --------------------------------------------------- | ------- | ---- |
+| Tâche                                              | Validée | Lien |
+| -------------------------------------------------- | ------- | ---- |
 | 🔜 Préparer la documentation de l'API avec Swagger | ❌      |      |

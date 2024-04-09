@@ -1,78 +1,83 @@
 # PROJET : BookingServer
 
 ## Arborescence du projet :
-```
+
 .
 ├── BOOKINGSERVER
-│   ├── backend
-│   │   ├── bin
-│   │   │   └── www
-│   │   ├── config
-│   │   │   ├── config.js
-│   │   │   └── db.js
-│   │   ├── controllers
-│   │   │   ├── auth.controller.js
-│   │   │   ├── reservation.controller.js
-│   │   │   ├── room.controller.js
-│   │   │   ├── spot.controller.js
-│   │   │   └── user.controller.js
-│   │   ├── logs
-│   │   │   ├── .gitkeep
-│   │   │   ├── all.log
-│   │   │   └── error.log
-│   │   ├── middlewares
-│   │   │   ├── authenticate.middleware.js
-│   │   │   └── morgan.middleware.js
-│   │   ├── migrations
-│   │   │   ├── 20240311131908-create-user.js
-│   │   │   ├── 20240311131939-create-reservation.js
-│   │   │   ├── 20240311131946-create-room.js
-│   │   │   └── 20240311131952-create-spot.js
-│   │   ├── models
-│   │   │   ├── index.js
-│   │   │   ├── reservation.js
-│   │   │   ├── room.js
-│   │   │   ├── spot.js
-│   │   │   └── user.js
-│   │   ├── routes
-│   │   │   ├── auth.route.js
-│   │   │   ├── index.route.js
-│   │   │   ├── reservations.route.js
-│   │   │   ├── rooms.route.js
-│   │   │   ├── spots.route.js
-│   │   │   └── users.route.js
-│   │   ├── seeders
-│   │   │   ├── 20240311133002-user.js
-│   │   │   ├── 20240311133053-reservation.js
-│   │   │   ├── 20240311133100-spot.js
-│   │   │   └── 20240311133106-room.js
-│   │   ├── utils
-│   │   │   └── logger.js
-│   │   ├── .env
-│   │   ├── app.js
-│   │   ├── package-lock.json
-│   │   └── package.json
-│   ├── docs
-│   │   └── ...
-│   ├── frontendWebBookingServer
-│   │   └── ...
-│   ├── .gitignore
-│   └── README.md
+│ ├── backend
+│ │ ├── bin
+│ │ │ └── www
+│ │ ├── config
+│ │ │ ├── config.js
+│ │ │ └── db.js
+│ │ ├── controllers
+│ │ │ ├── auth.controller.js
+│ │ │ ├── reservation.controller.js
+│ │ │ ├── room.controller.js
+│ │ │ ├── spot.controller.js
+│ │ │ └── user.controller.js
+│ │ ├── logs
+│ │ │ ├── .gitkeep
+│ │ │ ├── all.log
+│ │ │ └── error.log
+│ │ ├── middlewares
+│ │ │ ├── authenticate.middleware.js
+│ │ │ └── morgan.middleware.js
+│ │ ├── migrations
+│ │ │ ├── 20240311131908-create-user.js
+│ │ │ ├── 20240311131939-create-reservation.js
+│ │ │ ├── 20240311131946-create-room.js
+│ │ │ └── 20240311131952-create-spot.js
+│ │ ├── models
+│ │ │ ├── index.js
+│ │ │ ├── reservation.js
+│ │ │ ├── room.js
+│ │ │ ├── spot.js
+│ │ │ └── user.js
+│ │ ├── routes
+│ │ │ ├── auth.route.js
+│ │ │ ├── index.route.js
+│ │ │ ├── reservations.route.js
+│ │ │ ├── rooms.route.js
+│ │ │ ├── spots.route.js
+│ │ │ └── users.route.js
+│ │ ├── seeders
+│ │ │ ├── 20240311133002-user.js
+│ │ │ ├── 20240311133053-reservation.js
+│ │ │ ├── 20240311133100-spot.js
+│ │ │ └── 20240311133106-room.js
+│ │ ├── utils
+│ │ │ └── logger.js
+│ │ ├── .env
+│ │ ├── app.js
+│ │ ├── package-lock.json
+│ │ └── package.json
+│ ├── docs
+│ │ └── ...
+│ ├── frontendWebBookingServer
+│ │ └── ...
+│ ├── .gitignore
+│ └── README.md
 ├── node_modules
 └── ...
-```
+
 ## Setup du projet
+
 1. Installation du projet.
+
 ```javascript
 git clone https://github.com/ThibaultGdf/BookingServer.git
 ```
 
 2. Installation des dépendances.
+
 ```bash
 cd BookingServer/backend
 npm install
 ```
+
 3. Création du fichier env et son contenu.
+
 ```bash
 echo -e "PORT=your_port
 DEV_DB_USER=your_user
@@ -93,13 +98,16 @@ DB_NAME_PROD=database_production" > ".env"
 ```
 
 4. Créer la base de donnée
+
 ```bash
 npx sequelize-cli db:create
 ```
 
- 5. Migrer les données dans la base de donnée
+5.  Migrer les données dans la base de donnée
+
 ```bash
 npx sequelize db:migrate
+
 ```
 
 6. Envoyer les seeders dans la base de donnée
@@ -109,6 +117,7 @@ npx sequelize db:seed:all
 ```
 
 7. Remplacer la ligne de code dans notre fichier /config/db.js.
+
 ```bash
 AVANT
 const sequelize = new Sequelize("postgres://${process.env.DEV_DB_USER}:${process.env.DEV_DB_PASSWORD}@${process.env.DEV_DB_HOST}:${process.env.PORT_DB}/${process.env.DEV_DB_NAME}");
@@ -117,11 +126,12 @@ APRES
 const sequelize = new Sequelize(`postgres://${process.env.DEV_DB_USER}:${process.env.DEV_DB_PASSWORD}@${process.env.DEV_DB_HOST}:${process.env.PORT_DB}/${process.env.DEV_DB_NAME}`);
 
 ```
+
 7. Lancer le serveur
+
 ```bash
 npm run start
 ```
-
 
 ## Initialisation du serveur
 
@@ -167,7 +177,6 @@ npm install sequelize cors dotenv jsonwebtoken bcryptjs
 
 ☑️ Créer le fichier .gitignore à la racine du projet et ajouter node_modules à l'intérieur.
 
-
 ☑️ Allumer le serveur sur le port 3000.
 
 ```bash
@@ -188,8 +197,8 @@ touch spots.route.js
 ☑️ Renommer le fichier index.js et le fichier user.js.
 
 ```javascript
-index.route.js
-users.route.js
+index.route.js;
+users.route.js;
 ```
 
 ☑️ Déclarer les routers dans /routes/index.js.
@@ -213,118 +222,116 @@ router.use("/users", userRouter);
 ## Ajouter les routes dans les fichiers
 
 ☑️ ROUTES/RESERVATIONS
+
 ```javascript
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
 /* GET */
-router.get('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route GET des reservations' });
+router.get("/", function (req, res, next) {
+  res.json({ message: "Vous êtes sur la route GET des reservations" });
 });
 
 /* POST */
-router.post('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route POST des reservations' });
+router.post("/", function (req, res, next) {
+  res.json({ message: "Vous êtes sur la route POST des reservations" });
 });
 
-  /* PUT */
-router.put('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route PUT des reservations' });
+/* PUT */
+router.put("/", function (req, res, next) {
+  res.json({ message: "Vous êtes sur la route PUT des reservations" });
 });
 
-  /* DELETE */
-router.delete('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route DELETE des reservations' });
+/* DELETE */
+router.delete("/", function (req, res, next) {
+  res.json({ message: "Vous êtes sur la route DELETE des reservations" });
 });
 
 module.exports = router;
 ```
-
 
 ☑️ ROUTES/ROOMS
 
 ```javascript
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
 /* GET */
-router.get('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route GET des rooms' });
+router.get("/", function (req, res, next) {
+  res.json({ message: "Vous êtes sur la route GET des rooms" });
 });
 
 /* POST */
-router.post('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route POST des rooms' });
+router.post("/", function (req, res, next) {
+  res.json({ message: "Vous êtes sur la route POST des rooms" });
 });
 
-  /* PUT */
-router.put('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route PUT des rooms' });
+/* PUT */
+router.put("/", function (req, res, next) {
+  res.json({ message: "Vous êtes sur la route PUT des rooms" });
 });
 
-  /* DELETE */
-router.delete('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route DELETE des rooms' });
+/* DELETE */
+router.delete("/", function (req, res, next) {
+  res.json({ message: "Vous êtes sur la route DELETE des rooms" });
 });
 
 module.exports = router;
 ```
-
 
 ☑️ ROUTES/SPOTS
 
 ```javascript
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
 /* GET */
-router.get('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route GET des spots' });
+router.get("/", function (req, res, next) {
+  res.json({ message: "Vous êtes sur la route GET des spots" });
 });
 
 /* POST */
-router.post('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route POST des spots' });
+router.post("/", function (req, res, next) {
+  res.json({ message: "Vous êtes sur la route POST des spots" });
 });
 
-  /* PUT */
-router.put('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route PUT des spots' });
+/* PUT */
+router.put("/", function (req, res, next) {
+  res.json({ message: "Vous êtes sur la route PUT des spots" });
 });
 
-  /* DELETE */
-router.delete('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route DELETE des spots' });
+/* DELETE */
+router.delete("/", function (req, res, next) {
+  res.json({ message: "Vous êtes sur la route DELETE des spots" });
 });
 
 module.exports = router;
 ```
 
-
 ☑️ ROUTES/USERS
 
 ```javascript
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
 /* GET */
-router.get('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route GET des users' });
+router.get("/", function (req, res, next) {
+  res.json({ message: "Vous êtes sur la route GET des users" });
 });
 
 /* POST */
-router.post('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route POST des users' });
+router.post("/", function (req, res, next) {
+  res.json({ message: "Vous êtes sur la route POST des users" });
 });
 
-  /* PUT */
-router.put('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route PUT des users' });
+/* PUT */
+router.put("/", function (req, res, next) {
+  res.json({ message: "Vous êtes sur la route PUT des users" });
 });
 
-  /* DELETE */
-router.delete('/', function(req, res, next) {
-    res.json({ message: 'Vous êtes sur la route DELETE des users' });
+/* DELETE */
+router.delete("/", function (req, res, next) {
+  res.json({ message: "Vous êtes sur la route DELETE des users" });
 });
 
 module.exports = router;
@@ -401,7 +408,6 @@ module.exports = {
     dialect: "postgres",
   },
 };
-
 ```
 
 ☑️ Créer un fichier db.js à la racine du projet.
@@ -409,7 +415,6 @@ module.exports = {
 ```bash
 touch db.js
 ```
-
 
 ☑️ Créer notre base de donnée.
 
@@ -420,17 +425,18 @@ npx sequelize-cli db:create
 ☑️ Faire la connexion avec la base de donnée.
 
 ```javascript
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize("postgres://thibaultgodefroy:password@localhost:5432/bookingserver_development");
+const sequelize = new Sequelize(
+  "postgres://thibaultgodefroy:password@localhost:5432/bookingserver_development",
+);
 
 try {
   sequelize.authenticate().then(() => {
-    console.log('Connection has been established successfully.');
+    console.log("Connection has been established successfully.");
   });
-  
 } catch (error) {
-  console.error('Unable to connect to the database:', error);
+  console.error("Unable to connect to the database:", error);
 }
 ```
 
@@ -441,7 +447,7 @@ try {
 ☑️ Créer le model Reservation
 
 ```bash
-npx sequelize-cli model:generate --name Reservation --attributes number_of_customers:integer,date:date,name:string,note:string,status:integer
+npx sequelize-cli model:generate --name Reservation --attributes number_of_customers:integer,reservation_date:date,reservation_name:string,reservation_note:string,reservation_status:integer
 ```
 
 ☑️ Créer le model Room
@@ -459,13 +465,9 @@ npx sequelize-cli model:generate --name Spot --attributes name:string
 ☑️ Créer le model User
 
 ```bash
-npx sequelize model:generate --name User --attributes first_name:string,last_name:string,email:string,role:string,password:string
+npx sequelize model:generate --name User --attributes firstname:string,lastname:string,email:string,user_role:string,user_password:string
 ```
-☑️ Créer le model Membership
 
-```bash
-npx sequelize-cli model:generate --name Membership --attributes name:string,number_of_reservations:integer,expiration_date:date
-```
 ☑️ Migrer les models dans la base de donnée
 
 ```bash
@@ -481,21 +483,25 @@ Commant + R
 ## Création des Seeders
 
 ### ☑️ User
+
 ```bash
 npx sequelize-cli seed:generate --name user
 ```
 
 ### ☑️ Reservation
+
 ```bash
 npx sequelize-cli seed:generate --name reservation
 ```
 
 ### ☑️ Spot
+
 ```bash
 npx sequelize-cli seed:generate --name spot
 ```
 
 ### ☑️ Room
+
 ```bash
 npx sequelize-cli seed:generate --name room
 ```
@@ -503,79 +509,90 @@ npx sequelize-cli seed:generate --name room
 ☑️ Ajouter des données fictives dans les seeders.
 
 ### Reservation
+
 ```javascript
 module.exports = {
-  async up (queryInterface, Sequelize) {
-
-    await queryInterface.bulkInsert('Reservations', [{
-      number_of_customers: 4,
-      reservation_date: new Date(),
-      reservation_name: "Alex",
-      reservation_note: "Un menu végétarien",
-      reservation_status: 1,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }]);
+  async up(queryInterface, Sequelize) {
+    await queryInterface.bulkInsert("Reservations", [
+      {
+        number_of_customers: 4,
+        reservation_date: new Date(),
+        reservation_name: "Alex",
+        reservation_note: "Un menu végétarien",
+        reservation_status: 1,
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+    ]);
   },
 
-  async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Reservations', null, {});
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete("Reservations", null, {});
+  },
 };
 ```
 
 ### Room
+
 ```javascript
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Rooms', [{
-      room_name: "Salle 1",
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }]);
+  async up(queryInterface, Sequelize) {
+    await queryInterface.bulkInsert("Rooms", [
+      {
+        name: "Salle 1",
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+    ]);
   },
 
-  async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Rooms', null, {});
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete("Rooms", null, {});
+  },
 };
 ```
 
 ### Spot
+
 ```javascript
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Spots', [{
-      spot_name: "Le Bistrot de la Gare",
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }]);
+  async up(queryInterface, Sequelize) {
+    await queryInterface.bulkInsert("Spots", [
+      {
+        spot_name: "Le Bistrot de la Gare",
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+    ]);
   },
 
-  async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Spots', null, {});
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete("Spots", null, {});
+  },
 };
 ```
 
 ### User
+
 ```javascript
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Users', [{
-      firstname: "Alex",
-      lastname: "Zerah",
-      email: "pro@alexzerah.com",
-      user_role: "client",
-      user_password: "password en attente de hashage",
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }]);
+  async up(queryInterface, Sequelize) {
+    await queryInterface.bulkInsert("Users", [
+      {
+        firstname: "Alex",
+        lastname: "Zerah",
+        email: "pro@alexzerah.com",
+        user_role: "client",
+        user_password: "password en attente de hashage",
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+    ]);
   },
 
-  async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Users', null, {});
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete("Users", null, {});
+  },
 };
 ```
 
@@ -596,27 +613,24 @@ const Spot = require("./models/spot")(sequelize, DataTypes);
 const User = require("./models/user")(sequelize, DataTypes);
 ```
 
-
-
 ☑️ Modifier les routes pour récupérer toutes les données.
 
 ```javascript
-router.get('/', async function(req, res, next) {
-
+router.get("/", async function (req, res, next) {
   try {
-    const reservations = await Reservation.findAll()
+    const reservations = await Reservation.findAll();
     console.log(reservations);
-    res.json({message:reservations});
-  } catch(e) {
+    res.json({ message: reservations });
+  } catch (e) {
     res.json(e);
   }
 });
 ```
 
-
 ☑️ Ajouter dans le fichier db.js la liaison des models à la base de donnée.
+
 ```javascript
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes } = require("sequelize");
 
 const Reservation = require("./models/reservation")(sequelize, DataTypes);
 const Room = require("./models/room")(sequelize, DataTypes);
@@ -654,53 +668,52 @@ touch user.controller.js
 ☑️ Modifier le fichier user.route.js
 
 ```javascript
-var userController = require('../controllers/user.controller.js')
+var userController = require("../controllers/user.controller.js");
 
 /* GET */
-router.get('/', userController.get);
+router.get("/", userController.get);
 ```
 
 ☑️ Ajouter la fonction pour obtenir tous les users dans le fichier room.controller.js
 
 ```javascript
-const { User } = require('../config/db.js');
+const { User } = require("../config/db.js");
 
-const get = async function(req, res, next) {
-    try {
-        const users = await User.findAll()
-        console.log(users);
-        res.status(200).json({ users })
-    } catch(error) {
-        res.json(error);
-    }
+const get = async function (req, res, next) {
+  try {
+    const users = await User.findAll();
+    console.log(users);
+    res.status(200).json({ users });
+  } catch (error) {
+    res.json(error);
+  }
 };
 
 module.exports = { get };
 ```
 
-
 ☑️ Modifier le fichier reservation.route.js
 
 ```javascript
-var reservationController = require('../controllers/reservation.controller.js')
+var reservationController = require("../controllers/reservation.controller.js");
 
 /* GET */
-router.get('/', reservationController.get);
+router.get("/", reservationController.get);
 ```
 
+☑️ Ajouter la fonction pour obtenir toutes les reservations dans le fichier reservation.controller.js
 
-☑️ Ajouter la fonction pour obtenir toutes les reservations dans le fichier reservation.controller.js 
 ```javascript
-const { Reservation } = require('../config/db.js');
+const { Reservation } = require("../config/db.js");
 
-const get = async function(req, res, next) {
-    try {
-        const reservations = await Reservation.findAll()
-        console.log(reservations);
-        res.status(200).json({ reservations })
-    } catch(error) {
-        res.json(error);
-    }
+const get = async function (req, res, next) {
+  try {
+    const reservations = await Reservation.findAll();
+    console.log(reservations);
+    res.status(200).json({ reservations });
+  } catch (error) {
+    res.json(error);
+  }
 };
 
 module.exports = { get };
@@ -709,25 +722,25 @@ module.exports = { get };
 ☑️ Modifier le fichier room.route.js
 
 ```javascript
-var roomController = require('../controllers/room.controller.js')
+var roomController = require("../controllers/room.controller.js");
 
 /* GET */
-router.get('/', roomController.get);
+router.get("/", roomController.get);
 ```
 
 ☑️ Ajouter la fonction pour obtenir toutes les rooms dans le fichier room.controller.js.
 
 ```javascript
-const { Room } = require('../config/db.js');
+const { Room } = require("../config/db.js");
 
-const get = async function(req, res, next) {
-    try {
-        const rooms = await Room.findAll()
-        console.log(rooms);
-        res.status(200).json({ rooms })
-    } catch(error) {
-        res.json(error);
-    }
+const get = async function (req, res, next) {
+  try {
+    const rooms = await Room.findAll();
+    console.log(rooms);
+    res.status(200).json({ rooms });
+  } catch (error) {
+    res.json(error);
+  }
 };
 
 module.exports = { get };
@@ -736,25 +749,25 @@ module.exports = { get };
 ☑️ Modifier le fichier spot.route.js.
 
 ```javascript
-var spotController = require('../controllers/spot.controller.js')
+var spotController = require("../controllers/spot.controller.js");
 
 /* GET */
-router.get('/', spotController.get);
+router.get("/", spotController.get);
 ```
 
 ☑️ Ajouter la fonction pour obtenir tous les spots dans le fichier spot.controller.js.
 
 ```javascript
-const { Spot } = require('../config/db.js');
+const { Spot } = require("../config/db.js");
 
-const get = async function(req, res, next) {
-    try {
-        const spots = await Spot.findAll()
-        console.log(spots);
-        res.status(200).json({ spots })
-    } catch(error) {
-        res.json(error);
-    }
+const get = async function (req, res, next) {
+  try {
+    const spots = await Spot.findAll();
+    console.log(spots);
+    res.status(200).json({ spots });
+  } catch (error) {
+    res.json(error);
+  }
 };
 
 module.exports = { get };
@@ -763,6 +776,7 @@ module.exports = { get };
 ## Authentification
 
 ☑️ Créer un fichier auth dans le dossier routes.
+
 ```bash
 cd routes
 touch auth.route.js
@@ -812,13 +826,13 @@ POST /auth/signin
 ☑️ Créer le router auth dans le fichier app.js.
 
 ```javascript
-app.use('/auth', authRouter);
+app.use("/auth", authRouter);
 ```
 
 ☑️ Renommer la route du router index dans le fichier app.js.
 
 ```javascript
-app.use('/api', indexRouter);
+app.use("/api", indexRouter);
 ```
 
 ## Sign Up
@@ -844,38 +858,37 @@ const user = {
 ☑️ Créer les variables pour chiffrer le mot de passe dans la fonction SignUp
 
 ```javascript
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+const salt = await bcrypt.genSalt(10);
+const hashedPassword = await bcrypt.hash(req.body.password, salt);
 ```
-
 
 ☑️ Ajouter l'utilisateur dans la base de donnée avec async/await
 
 ```javascript
-router.post('/signup', async (req, res) => {
+router.post("/signup", async (req, res) => {
+  const salt = await bcrypt.genSalt(10);
+  const { firstname, lastname, email } = req.body;
+  const user_password = req.body.password;
+  const hashedPassword = await bcrypt.hash(user_password, salt);
 
-    const salt = await bcrypt.genSalt(10);
-    const { firstname, lastname, email } = req.body
-    const user_password = req.body.password
-    const hashedPassword = await bcrypt.hash(user_password, salt);
-
-    const user = {
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        user_role: "customer",
-        user_password: hashedPassword,
-    };
-try {
+  const user = {
+    firstname: firstname,
+    lastname: lastname,
+    email: email,
+    user_role: "customer",
+    user_password: hashedPassword,
+  };
+  try {
     await User.create(user);
-    res.json({user})
-} catch(error) {
-    console.log(error)
-};
+    res.json({ user });
+  } catch (error) {
+    console.log(error);
+  }
 });
 ```
 
 ☑️ Sécuriser les champs envoyés dans la base de donnée pour qu'ils ne soient pas vide.
+
 ```javascript
 EN ATTENTE DU CODE
 ```
@@ -885,48 +898,50 @@ EN ATTENTE DU CODE
 ☑️ Créer la route pour se connecter sur Postman.
 
 ☑️ Créer la fonction SignUp dans mon controller.
+
 ```javascript
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-const { User } = require('../config/db.js');
+const { User } = require("../config/db.js");
 
 const signUp = async (req, res) => {
-    const salt = await bcrypt.genSalt(10);
+  const salt = await bcrypt.genSalt(10);
 
-    const { firstname, lastname, email } = req.body
-    const user_password = req.body.password
+  const { firstname, lastname, email } = req.body;
+  const user_password = req.body.password;
 
-    const hashedPassword = await bcrypt.hash(user_password, salt);
-    
+  const hashedPassword = await bcrypt.hash(user_password, salt);
 
-    const user = {
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        user_role: "customer",
-        user_password: hashedPassword,
-    };
+  const user = {
+    firstname: firstname,
+    lastname: lastname,
+    email: email,
+    user_role: "customer",
+    user_password: hashedPassword,
+  };
 
-    if (!user) {
-        return res.status(422).json ({ message: "Le User n'existe pas"})
-    }
+  if (!user) {
+    return res.status(422).json({ message: "Le User n'existe pas" });
+  }
 
-    try {
-        await User.create(user);
-        res.json({user})
-    } catch(error) {
-        console.log(error)
-    };
+  try {
+    await User.create(user);
+    res.json({ user });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports = { signUp };
 ```
-☑️ Créer la route SignIn dans mon router.
-```javascript
-var authController = require('../controllers/auth.controller.js')
 
-router.post('/signup', authController.signUp);
+☑️ Créer la route SignIn dans mon router.
+
+```javascript
+var authController = require("../controllers/auth.controller.js");
+
+router.post("/signup", authController.signUp);
 ```
 
 ☑️ Créer la fonction SignIn dans mon controller.
@@ -935,112 +950,125 @@ router.post('/signup', authController.signUp);
 
 ```javascript
 const signIn = async (req, res) => {
-    const user = await User.findOne({
-        where: {
-            email: req.body.email
-        }
-    })
-}
+  const user = await User.findOne({
+    where: {
+      email: req.body.email,
+    },
+  });
+};
 ```
 
 ☑️ Vérifier que l'utilisateur contient bien une adresse email.
+
 ```javascript
 if (!user) {
-        return res.status(400).json({ message: "Nom d'utilisateur ou mot de passe incorrect"});
-    }
+  return res
+    .status(400)
+    .json({ message: "Nom d'utilisateur ou mot de passe incorrect" });
+}
 ```
 
 ☑️ Comparer le mot de passe de postman avec le mot de passe dans ma base de donnée.
+
 ```javascript
-    const validPassword = await bcrypt.compare(req.body.password, user.user_password);
-    if (!validPassword) {
-        res.status(400).json({ message: "Mot de passe incorrect"})
-    }
+const validPassword = await bcrypt.compare(
+  req.body.password,
+  user.user_password,
+);
+if (!validPassword) {
+  res.status(400).json({ message: "Mot de passe incorrect" });
+}
 ```
 
 ☑️ Création du payload qui va chiffrer les données dans le token.
+
 ```javascript
 const payload = {
-        id: user.id,
-        email: user.email,
-        role: user.user_role
-    }
+  id: user.id,
+  email: user.email,
+  role: user.user_role,
+};
 ```
 
 ☑️ Définir une SECRET_KEY.
+
 ```javascript
-const SECRET_KEY = 'secretkey23456';
+const SECRET_KEY = "secretkey23456";
 ```
 
 ☑️ Créer le token avec les informations du payload, la clée secrète et le temps d'expiration du token.
+
 ```javascript
-const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
-    res.json({token: token});
+const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
+res.json({ token: token });
 ```
 
 ☑️ /controllers/auth.controller.js
+
 ```javascript
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-const { User } = require('../config/db.js');
+const { User } = require("../config/db.js");
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
 const signUp = async (req, res) => {
-    const salt = await bcrypt.genSalt(10);
+  const salt = await bcrypt.genSalt(10);
 
-    const { firstname, lastname, email } = req.body
-    const user_password = req.body.password
+  const { firstname, lastname, email } = req.body;
+  const user_password = req.body.password;
 
-    const hashedPassword = await bcrypt.hash(user_password, salt);
-    
+  const hashedPassword = await bcrypt.hash(user_password, salt);
 
-    const user = {
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        user_role: "client",
-        user_password: hashedPassword,
-    };
+  const user = {
+    firstname: firstname,
+    lastname: lastname,
+    email: email,
+    user_role: "client",
+    user_password: hashedPassword,
+  };
 
-    if (!user) {
-        return res.status(422).json ({ message: "Le User n'existe pas"})
-    }
+  if (!user) {
+    return res.status(422).json({ message: "Le User n'existe pas" });
+  }
 
-    try {
-        await User.create(user);
-        res.json({user})
-    } catch(error) {
-        console.log(error)
-    };
+  try {
+    await User.create(user);
+    res.json({ user });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const signIn = async (req, res) => {
-    const user = await User.findOne({
-        where: {
-            email: req.body.email
-        }
-    });
+  const user = await User.findOne({
+    where: {
+      email: req.body.email,
+    },
+  });
 
-    if (!user) {
-        return res.status(400).json({ message: "Nom d'utilisateur incorrect"});
-    }
+  if (!user) {
+    return res.status(400).json({ message: "Nom d'utilisateur incorrect" });
+  }
 
-    const validPassword = await bcrypt.compare(req.body.password, user.user_password);
-    if (!validPassword) {
-        res.status(400).json({ message: "Mot de passe incorrect"})
-    }
+  const validPassword = await bcrypt.compare(
+    req.body.password,
+    user.user_password,
+  );
+  if (!validPassword) {
+    res.status(400).json({ message: "Mot de passe incorrect" });
+  }
 
-    const payload = {
-        id: user.id,
-        email: user.email,
-        role: user.user_role
-    }
+  const payload = {
+    id: user.id,
+    email: user.email,
+    role: user.user_role,
+  };
 
-    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
 
-    res.status(201).json({token: token});
+  res.status(201).json({ token: token });
 };
 
 module.exports = { signUp, signIn };
@@ -1049,16 +1077,19 @@ module.exports = { signUp, signIn };
 ## Securiser les données avec DOTENV
 
 ☑️ Installer la dépendance dotenv
+
 ```bash
 npm install dotenv
 ```
 
 ☑️ Créer le fichier .env dans le dossier backend
+
 ```bash
 touch .env
 ```
 
 ☑️ Remplir le fichier .env
+
 ```bash
 USER=thibaultgodefroy
 HOST=localhost
@@ -1069,17 +1100,23 @@ SECRET_KEY=secretkey23456
 ```
 
 ☑️ Configurer dotenv pour pouvoir utiliser process.env.
+
 ```javascript
-require('dotenv').config();
+require("dotenv").config();
 ```
 
 ☑️ Modifier la connexion avec ma base de donnée dans le fichier config/db.js.
-```javascript
-AVANT
-const sequelize = new Sequelize("postgres://thibaultgodefroy:password@localhost:5432/bookingserver_development");
 
-APRÈS
-const sequelize = new Sequelize(`postgres://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.PORT_DB}/${process.env.DATABASE}`);
+```javascript
+AVANT;
+const sequelize = new Sequelize(
+  "postgres://thibaultgodefroy:password@localhost:5432/bookingserver_development",
+);
+
+APRÈS;
+const sequelize = new Sequelize(
+  `postgres://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.PORT_DB}/${process.env.DATABASE}`,
+);
 ```
 
 ☑️ Ajouter le fichier .env dans le .gitignore.
@@ -1115,34 +1152,36 @@ module.exports = { verifyJwt };
 ```
 
 ☑️ Ajouter la vérification du token dans le router /api dans le fichier app.js.
+
 ```javascript
 // AVANT
-app.use('/api', indexRouter);
+app.use("/api", indexRouter);
 
 // APRES
-app.use('/api', authenticate.verifyJwt, indexRouter);
+app.use("/api", authenticate.verifyJwt, indexRouter);
 ```
 
 ☑️ Supprimer les éléments ci-dessous dans le fichier app.js.
+
 ```javascript
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "jade");
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render("error");
 });
 ```
 
@@ -1151,81 +1190,100 @@ app.use(function(err, req, res, next) {
 ☑️ Réservation : GET ONE
 
 1. Ajouter la route getOne dans ./routes/reservation.route.js.
+
 ```javascript
-router.get('/:id', reservationController.getOne);
+router.get("/:id", reservationController.getOne);
 ```
 
 2. Modifier l'intérieur de la fonction dans notre ./reservation.controller.js.
+
 ```javascript
 const getOne = async function (req, res) {
-    try {
-        const reservation = await Reservation.findByPk(req.params.id);
-        res.json({ reservation });
-    } catch (error) {
-        res.status(500).json({message: 'Erreur serveur lors de la récupération d\'une réservation'});
-    }
+  try {
+    const reservation = await Reservation.findByPk(req.params.id);
+    res.json({ reservation });
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        message: "Erreur serveur lors de la récupération d'une réservation",
+      });
+  }
 };
 ```
+
 ☑️ Réservation : GET ALL
 
 1. Ajouter la route getAll dans ./routes/reservation.route.js.
 
 ```javascript
-router.get('/', reservationController.getAll);
+router.get("/", reservationController.getAll);
 ```
 
 2. Modifier l'intérieur de la fonction dans notre ./reservation.controller.js.
 
 ```javascript
-const getAll = async function(_, res) {
-    try {
-        const reservations = await Reservation.findAll()
-        res.status(200).json({ reservations })
-    } catch(error) {
-        res.status(500).json({message: 'Erreur serveur lors de la récupération des réservation'});
-    }
+const getAll = async function (_, res) {
+  try {
+    const reservations = await Reservation.findAll();
+    res.status(200).json({ reservations });
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        message: "Erreur serveur lors de la récupération des réservation",
+      });
+  }
 };
 ```
-
 
 ☑️ Réservation : POST
 
 1. Ajouter la route post dans ./routes/reservation.route.js.
 
 ```javascript
-router.post('/', reservationController.post);
+router.post("/", reservationController.post);
 ```
 
 2. Modifier l'intérieur de la fonction dans notre ./reservation.controller.js.
 
 ```javascript
-const post = async function(req, res) {
-    try {
+const post = async function (req, res) {
+  try {
+    // Récupérer les informations dans postman
+    const {
+      number_of_customers,
+      reservation_date,
+      reservation_name,
+      reservation_note,
+      reservation_status,
+    } = req.body;
 
-// Récupérer les informations dans postman
-const { number_of_customers, reservation_date, reservation_name, reservation_note, reservation_status } = req.body
-
-       // Créer la réservation avec les champs de postman
-        const reservation = await Reservation.create({
-            number_of_customers,
-            reservation_date, 
-            reservation_name, 
-            reservation_note, 
-            reservation_status
-        });
-    return res.status(200).json({reservation})
-
-} catch(error) {
-    return res.status(500).json({message: 'Erreur serveur lors de la création d\'une réservation'})
-}
-    };
+    // Créer la réservation avec les champs de postman
+    const reservation = await Reservation.create({
+      number_of_customers,
+      reservation_date,
+      reservation_name,
+      reservation_note,
+      reservation_status,
+    });
+    return res.status(200).json({ reservation });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({
+        message: "Erreur serveur lors de la création d'une réservation",
+      });
+  }
+};
 ```
 
-☑️ Réservation : PUT 
+☑️ Réservation : PUT
+
 1. Ajouter la route put dans ./routes/reservation.route.js.
 
 ```javascript
-router.put('/:id', reservationController.put);
+router.put("/:id", reservationController.put);
 ```
 
 2. Modifier l'intérieur de la fonction dans notre ./reservation.controller.js.
@@ -1259,18 +1317,19 @@ reservation.reservation_status = reservation_status
 await reservation.save()
 
         res.status(200).json({ message: 'La réservation a bien été mise à jour !' });
-    
+
         } catch(error) {
         res.status(500).json({message: 'Erreur serveur lors du traîtement des données'});
         }
 };
 ```
 
-☑️ Réservation : DELETE 
+☑️ Réservation : DELETE
+
 1. Ajouter la route delete dans ./routes/reservation.route.js. (Attention DELETE n'est pas autorisé ! Utilisez Destroy)
 
 ```javascript
-router.delete('/:id', reservationController.destroy);
+router.delete("/:id", reservationController.destroy);
 ```
 
 2. Modifier l'intérieur de la fonction dans notre ./reservation.controller.js.
@@ -1299,109 +1358,122 @@ const destroy = async function(req, res) {
         res.status(200).json({ message: `La réservation ${id} a bien été supprimée !` });
     } catch(error) {
         res.status(500).json({ message: 'Erreur lors de la suppression de données !'})
-    } 
+    }
 }
 ```
 
 ☑️ Modifier les fonctions de Room dans le fichier ./controllers/room.controller.js.
+
 ```javascript
-const { Room } = require('../config/db.js');
+const { Room } = require("../config/db.js");
 
-const getAll = async function(req, res) {
-    try {
-        const rooms = await Room.findAll()
-        res.status(200).json({ rooms })
-    } catch(error) {
-        res.status(500).json({message: `Erreur serveur lors de la récupération des Rooms`});
-    };
+const getAll = async function (req, res) {
+  try {
+    const rooms = await Room.findAll();
+    res.status(200).json({ rooms });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: `Erreur serveur lors de la récupération des Rooms` });
+  }
 };
 
-const getOne = async function(req, res) {
-    try {
-        // Récupération de l'id dans postman
-        const id = req.params.id
+const getOne = async function (req, res) {
+  try {
+    // Récupération de l'id dans postman
+    const id = req.params.id;
 
-        // Trouver la room par son id
-        const room = await Room.findByPk(id)
+    // Trouver la room par son id
+    const room = await Room.findByPk(id);
 
-        // Vérifier si la room existe
-        if(!room) {
-            return res.status(404).json({ message: `La room ${id} n'existe pas !`})
-        }
-        res.status(200).json({ room })
-    } catch(error) {
-        res.status(500).json({message: `Erreur serveur lors de la récupération d'une Room`});
-    };
+    // Vérifier si la room existe
+    if (!room) {
+      return res.status(404).json({ message: `La room ${id} n'existe pas !` });
+    }
+    res.status(200).json({ room });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: `Erreur serveur lors de la récupération d'une Room` });
+  }
 };
 
-const post = async function(req, res) {
-    try {
-        // Récupérer les informations dans postman
-        const { room_name } = req.body
+const post = async function (req, res) {
+  try {
+    // Récupérer les informations dans postman
+    const { name } = req.body;
 
-        // Création d'une room
-        const room = await Room.create({
-            // Ajouter la valeur de postman dans notre base de donnée
-            room_name
-        });
-        res.status(200).json({ message: `Votre room : ${room_name}, a bien été crée`});   
-    } catch(error) {
-    res.status(500).json({ message: 'Erreur serveur lors de la création de room'});
-    };
+    // Création d'une room
+    const room = await Room.create({
+      // Ajouter la valeur de postman dans notre base de donnée
+      name,
+    });
+    res.status(200).json({ message: `Votre room : ${name}, a bien été crée` });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Erreur serveur lors de la création de room" });
+  }
 };
 
-const put = async function(req, res) {
-    try {    
-        // Trouver une room avec son ID
-        const id = req.params.id;
+const put = async function (req, res) {
+  try {
+    // Trouver une room avec son ID
+    const id = req.params.id;
 
-        // Récupérer les informations dans postman
-        const { room_name } = req.body
-        
-         // Chercher la room avec l'id
-        const room = await Room.findByPk(id);
+    // Récupérer les informations dans postman
+    const { name } = req.body;
 
-        // Vérifie qu'il y a bien une room
-        if(!room) {
-            return res.status(404).json({message: `La Room ${id} n'existe pas`});
-        };
-        
+    // Chercher la room avec l'id
+    const room = await Room.findByPk(id);
+
+    // Vérifie qu'il y a bien une room
+    if (!room) {
+      return res.status(404).json({ message: `La Room ${id} n'existe pas` });
+    }
+
     // Modifier l'ancienne room par la nouvelle
-        room.room_name = room_name
+    room.name = name;
 
-// Sauvegarder la nouvelle réservation
-        await room.save();
+    // Sauvegarder la nouvelle réservation
+    await room.save();
 
-        res.status(200).json({message: `La room a bien été modifiée` });
-    } catch (error) {
-        return res.status(500).json({message: `Erreur serveur lors de la modification d'une room`});
-    };
+    res.status(200).json({ message: `La room a bien été modifiée` });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: `Erreur serveur lors de la modification d'une room` });
+  }
 };
 
-const destroy = async function(req, res) {
-    try {
-        // Récuperer l'id
-        const id = req.params.id;
+const destroy = async function (req, res) {
+  try {
+    // Récuperer l'id
+    const id = req.params.id;
 
-        // Trouver la room avec l'id
-        const room = await Room.findByPk(id);
+    // Trouver la room avec l'id
+    const room = await Room.findByPk(id);
 
-        // Vérification que la room existe
-        if(!room) {
-            return res.status(404).json({message: `La room ${room_name} n'existe pas`});
-        }
+    // Vérification que la room existe
+    if (!room) {
+      return res.status(404).json({ message: `La room ${name} n'existe pas` });
+    }
 
-        const deletedRoom = await room.destroy();
+    const deletedRoom = await room.destroy();
 
-          // Vérifier que la réservation est supprimée
-        if (deletedRoom === 0) {
-            return res.status(404).json({ message: `La room ${id} n\'existe pas`})
-        }
+    // Vérifier que la réservation est supprimée
+    if (deletedRoom === 0) {
+      return res.status(404).json({ message: `La room ${id} n\'existe pas` });
+    }
 
-        return res.status(200).json({ message: `La room ${room} a bien été supprimée`});
-    } catch(error) {
-        return res.status(500).json({ message: `Erreur serveur lors de la suppression d'une room`});
-    };
+    return res
+      .status(200)
+      .json({ message: `La room ${room} a bien été supprimée` });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: `Erreur serveur lors de la suppression d'une room` });
+  }
 };
 
 module.exports = { getOne, getAll, post, put, destroy };
@@ -1410,22 +1482,22 @@ module.exports = { getOne, getAll, post, put, destroy };
 ☑️ Modifier les router de Room dans le fichier ./routes/rooms.route.js.
 
 ```javascript
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-var roomController = require('../controllers/room.controller.js')
+var roomController = require("../controllers/room.controller.js");
 
 /* GET */
-router.get('/', roomController.getAll);
-router.get('/:id', roomController.getOne);
+router.get("/", roomController.getAll);
+router.get("/:id", roomController.getOne);
 
 /* POST */
-router.post('/', roomController.post);
+router.post("/", roomController.post);
 
-  /* PUT */
-router.put('/:id', roomController.put);
+/* PUT */
+router.put("/:id", roomController.put);
 
-  /* DELETE */
-router.delete('/:id', roomController.destroy);
+/* DELETE */
+router.delete("/:id", roomController.destroy);
 
 module.exports = router;
 ```
@@ -1436,7 +1508,7 @@ module.exports = router;
 
 [x] Créer un fichier /.gitkeep dans le fichier /log
 
-[x] Ajouter logs/*.log dans le fichier .gitignore.
+[x] Ajouter logs/\*.log dans le fichier .gitignore.
 
 [x] Créer le dossier utils à la racine du projet.
 
@@ -1451,73 +1523,74 @@ npm install winston
 [x] Ajouter le code ci-dessous dans le fichier /utils/logger.js.
 
 ```javascript
-const winston = require('winston');
+const winston = require("winston");
 
 // Le niveau définira ce qui sera affiché
 const levels = {
-    error: 0,
-    warn: 1,
-    info: 2,
-    http: 3,
-    debug: 4,
-}
+  error: 0,
+  warn: 1,
+  info: 2,
+  http: 3,
+  debug: 4,
+};
 
 // Detemine le niveau debug ou warn
 const level = () => {
-    const env = process.env.DEBUG || 'development'
-    const isDevelopment = env === 'development'
-    return isDevelopment ? 'debug' : 'warn'
-}
+  const env = process.env.DEBUG || "development";
+  const isDevelopment = env === "development";
+  return isDevelopment ? "debug" : "warn";
+};
 
 // Couleurs choisies pour chaque élément
 const colors = {
-    error: 'red',
-    warn: 'yellow',
-    info: 'green',
-    http: 'magenta',
-    debug: 'white',
-} 
+  error: "red",
+  warn: "yellow",
+  info: "green",
+  http: "magenta",
+  debug: "white",
+};
 
-winston.addColors(colors)
+winston.addColors(colors);
 
 // Type de format, vous pouvez le modifier
 const format = winston.format.combine(
-    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms'}),
-    winston.format.colorize({ all: true }),
-    winston.format.printf(
-        (info) => `${info.timestamp} [${info.level}] ${info.message}`,
-    ),
+  winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss:ms" }),
+  winston.format.colorize({ all: true }),
+  winston.format.printf(
+    (info) => `${info.timestamp} [${info.level}] ${info.message}`,
+  ),
 );
 
 const transports = [
-    new winston.transports.Console(),
-    new winston.transports.File({
-        filename: 'logs/error.log',
-        level: 'error'
-    }),
-    new winston.transports.File({ filename: 'logs/all.log' }),
-]
+  new winston.transports.Console(),
+  new winston.transports.File({
+    filename: "logs/error.log",
+    level: "error",
+  }),
+  new winston.transports.File({ filename: "logs/all.log" }),
+];
 
 const logger = winston.createLogger({
-    level: level(),
-    levels,
-    format,
-    transports,
-})
+  level: level(),
+  levels,
+  format,
+  transports,
+});
 
-module.exports = logger
+module.exports = logger;
 ```
 
 [x] Créer le fichier /morgan.middleware.js dans le dossier /middlewares.
 
 [x] Ajouter le code ci-dessous dans le fichier /morgan.middleware.
+
 ```javascript
-   // morgan.middleware.js
+// morgan.middleware.js
 const morgan = require("morgan");
 const logger = require("../utils/logger");
 
 const stream = {
-// Use the http severity
+  // Use the http severity
   write: (message) => logger.http(message),
 };
 
@@ -1527,156 +1600,115 @@ const skip = () => {
 };
 
 const morganMiddleware = morgan(
-":remote-addr :method :url :status :res[content-length] - :response-time ms",
-  { stream, skip }
+  ":remote-addr :method :url :status :res[content-length] - :response-time ms",
+  { stream, skip },
 );
 
 module.exports = morganMiddleware;
-   ```
+```
+
 [x] Importer morganMiddleware et logger dans le fichier app.
+
 ```javascript
 const morganMiddleware = require("./middlewares/morgan.middleware");
 const logger = require("./utils/logger");
 ```
+
 [x] Supprimer les lignes de code ci-dessous dans le fichier app.js.
+
 ```javascript
 // const logger = require('morgan'); A supprimer
 // app.use(logger('dev')); A supprimer
 ```
+
 [x] Ajouter dans app.js.
+
 ```javascript
 app.use(morganMiddleware);
 
-logger.http('Debut session')
+logger.http("Debut session");
 ```
 
 [x] Installer l'extension suivante dans Visual Studio Code.
+
 ```bash
 ANSI Colors
 ```
 
-[x] Aller sur le fichier log et COMMAND SHIFT P 
+[x] Aller sur le fichier log et COMMAND SHIFT P
 
 [x] Marquer Ansi et Open Preview (Lorsque nous quittons la fenêtre, la couleur s'enlève)
 
 ## Rôles
 
 [ ] Ajouter le rôle administrateur dans le middlewares/authenticate.middleware.js.
+
 ```javascript
 const isAdmin = (req, res, next) => {
- if (req.user && req.user.role === "admin") {
+  if (req.user && req.user.role === "admin") {
     next();
- } else {
+  } else {
     console.log(req.user);
-    res.status(403).json({ message: 'Unauthorized : Accès non autorisé !'})
- }
-}
+    res.status(403).json({ message: "Unauthorized : Accès non autorisé !" });
+  }
+};
 
 module.exports = { verifyJwt, isAdmin };
-````
+```
 
-[x] Protéger les routes dans lesquels nous souhaitons avoir le rôle administrateur. 
+[x] Protéger les routes dans lesquels nous souhaitons avoir le rôle administrateur.
 
 ```javascript
-var authenticateMiddleware = require('../middlewares/authenticate.middleware.js');
+var authenticateMiddleware = require("../middlewares/authenticate.middleware.js");
 
-AVANT 
-router.get('/', reservationController.getAll);
+AVANT;
+router.get("/", reservationController.getAll);
 
-APRES
-router.get('/', authenticateMiddleware.isAdmin, reservationController.getAll);
+APRES;
+router.get("/", authenticateMiddleware.isAdmin, reservationController.getAll);
 ```
 
 [x] Ajouter la route pour éditer le rôle d'un utilisateur.
 
 ```javascript
-var authenticateMiddleware = require('../middlewares/authenticate.middleware.js')
+var authenticateMiddleware = require("../middlewares/authenticate.middleware.js");
 
-router.put('/editRole/:id', authenticateMiddleware.isAdmin, userController.editRole);
+router.put(
+  "/editRole/:id",
+  authenticateMiddleware.isAdmin,
+  userController.editRole,
+);
 ```
 
 [x] Ajouter son controller dans /controllers/user.controller.js.
+
 ```javascript
-const editRole = async function(req, res) {
-try {
-    const id = req.params.id
+const editRole = async function (req, res) {
+  try {
+    const id = req.params.id;
     const user = await User.findByPk(id);
 
     if (!user) {
-        return res.status(404).json({message: `L'utilisateur n'existe pas !`})
+      return res.status(404).json({ message: `L'utilisateur n'existe pas !` });
     }
 
-    user.user_role = req.body.role
+    user.user_role = req.body.role;
 
     await user.save();
 
-    res.status(200).json({message: `Le rôle a bien été modifié à l'utilisateur ${id}`})
-} catch(error) {
-    return res.status(500).json({message: `Erreur serveur lors de la modification d'un rôle !`})
-}
-}
+    res
+      .status(200)
+      .json({ message: `Le rôle a bien été modifié à l'utilisateur ${id}` });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: `Erreur serveur lors de la modification d'un rôle !` });
+  }
+};
 ```
 
 [x] Exporter la fonction
+
 ```javascript
 module.exports = { editRole };
 ```
-
-
-// AJOUTER PRETTIER :
-
-1. Installer le package.
-```javascript
-npm install --save-dev --save-exact prettier
-```
-
-2. Créer un fichier de configuration `.prettierrc` et ajouter son contenu à l'intérieur.
-```javascript
-node --eval "fs.writeFileSync('.prettierrc','{}\n')"
-```
-
-```javascript
- "tabWidth": 4,
-```
-
-3. Créer un fichier `.prettierignore`.
-```javascript
-touch .prettierignore
-```
-
-4. Ajouter le contenu dans le fichier `.prettierignore`.
-```javascript
-# Ignore artifacts:
-build
-coverage
-```
-
-5. Formatter tous les fichiers.
-```bash
-npx prettier . --write
-```
-
-// AJOUTER ESLint :
-
-1. Installer ESLint
-```bash
-npm i eslint
-```
-
-2. Configurer ESLint en l'initialisant.
-```bash
-npm init @eslint/config
-```
-
-3. Etapes de configuration
-1. ❯ To check syntax, find problems, and enforce code style
-2. ❯ JavaScript modules (import/export)
-3. ❯ None of these
-4. ? Does your project use TypeScript? › No
-5. ✔ Node
-6. ❯ Use a popular style guide
-7. ❯ Standard: https://github.com/standard/standard
-8. ❯ JavaScript
-9. ❯ No
-10. ❯ Yes
-11. ❯ npm

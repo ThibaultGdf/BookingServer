@@ -21,40 +21,40 @@
 
 ## Structure
 
-| Tâches       | Statut | Validation |
-| ------------ | ------ | ---------- |
-| Route        | ✅     |     /routes       |
-| Controller   | ✅     |      /controllers      |
+| Tâches      | Statut | Validation |
+| ----------- | ------ | ---------- |
+| Route       | ✅     |            |
+| Controller  | ✅     |            |
 | 🔜 Services | ❌     |            |
 
 ## POO
 
-| Tâches                   | Statut | Validation |
-| ------------------------ | ------ | ---------- |
+| Tâches                  | Statut | Validation |
+| ----------------------- | ------ | ---------- |
 | 🔜 Classe               | ❌     |            |
 | 🔜 Bonnes pratiques POO | ❌     |            |
 
 ## Sécurité
 
-| Tâches              | Statut | Validation |
-| ------------------- | ------ | ---------- |
-| Authentification    | ✅     |      /controllers/auth.controller.js       |
-| Authorisation       | ⏳     |      /middlewares/authenticate.middleware.js      |
-| Sign in             | ✅     |      /controllers/auth.controller.js      |
-| Sign up             | ✅     |      /controllers/auth.controller.js      |
-| bcrypt              | ✅     |      /controllers/auth.controller.js      |
-| jwt                 | ✅     |      /middlewares/authenticate.middleware.js      |
-| Mot de passe oublié | ❌     |            |
+| Tâches              | Statut | Validation        |
+| ------------------- | ------ | ----------------- |
+| Authentification    | ✅     |                   |
+| Authorisation       | 🟠     | Gestion des rôles |
+| Sign in             | ✅     |                   |
+| Sign up             | ✅     |                   |
+| bcrypt              | ✅     |                   |
+| jwt                 | ✅     |                   |
+| Mot de passe oublié | ❌     |                   |
 
 ## Outils, méthodes et docs
 
-| Tâches                                                  | Statut | Validation |
-| ------------------------------------------------------- | ------ | ---------- |
-| POSTMAN                                                 | ⏳     |    Prendre des captures d'écran        |
-| 🔜 Validation des données (express validator)          | ❌     |            |
-| 🔜 Purification des données (JOI)                      | ❌     |            |
-| 🔜 Mise en place des logs (morgan et autre winston)    | ❌     |            |
-| 🔜 Schema bdd / schema du projet / explication du code | ❌     |            |
-| 🔜 5 sources de veille                                 | ❌     |            |
-| 🔜 Explication d’un concept                            | ❌     |            |
-| 🔜 Dossier type d'une démarche de travail              | ❌     |            |
+| Tâches                                                 | Statut | Validation                   |
+| ------------------------------------------------------ | ------ | ---------------------------- |
+| POSTMAN                                                | ⏳     | Prendre des captures d'écran |
+| 🔜 Validation des données (express validator)          | ❌     |                              |
+| 🔜 Purification des données (JOI)                      | ❌     |                              |
+| 🔜 Mise en place des logs (morgan et autre winston)    | ❌     |                              |
+| 🔜 Schema bdd / schema du projet / explication du code | ❌     |                              |
+| 🔜 5 sources de veille                                 | ❌     |                              |
+| 🔜 Explication d’un concept                            | ❌     |                              |
+| 🔜 Dossier type d'une démarche de travail              | ❌     |                              |

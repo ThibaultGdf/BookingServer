@@ -6,9 +6,9 @@
 | --------------------------------------------------------------- | ------- | --------------- |
 | Création des dossiers et fichiers Routes (User, Room, Spot...)  | ✅      | ./routes        |
 | Création des dossiers et fichiers Modèles (User, Room, Spot...) | ❌      |                 |
-| Mise en place des contrôleurs (User, Room, Spot...)             | ⏳       | ./controllers   |
-| 🔜 Implémenter les services                                    | 🟠     |                 |
-| JWT                                                             | ⏳       | [JWT GitHub][1] |
+| Mise en place des contrôleurs (User, Room, Spot...)             | ⏳      | ./controllers   |
+| 🔜 Implémenter les services                                     | 🟠      |                 |
+| JWT                                                             | ⏳      | [JWT GitHub][1] |
 
 ## Liens
 

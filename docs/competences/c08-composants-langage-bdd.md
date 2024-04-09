@@ -30,6 +30,6 @@
 
 ## Tests
 
-| Tâche                                                  | Validée | Validation |
-| ------------------------------------------------------ | :-----: | ---------- |
-| Développement de tests unitaires pour chaque composant |   🟠    |     Implémenter les tests       |
+| Tâche                                                  | Validée | Validation            |
+| ------------------------------------------------------ | :-----: | --------------------- |
+| Développement de tests unitaires pour chaque composant |   🟠    | Implémenter les tests |
