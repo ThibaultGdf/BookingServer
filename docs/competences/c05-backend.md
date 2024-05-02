@@ -39,7 +39,7 @@
 | Tâches              | Statut | Validation        |
 | ------------------- | ------ | ----------------- |
 | Authentification    | ✅     |                   |
-| Authorisation       | 🟠     | Gestion des rôles |
+| Authorisation       | ✅     | Gestion des rôles |
 | Sign in             | ✅     |                   |
 | Sign up             | ✅     |                   |
 | bcrypt              | ✅     |                   |
