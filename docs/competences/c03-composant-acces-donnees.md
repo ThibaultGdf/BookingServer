@@ -44,8 +44,8 @@
 
 | Tâche                                                | Validée | Lien |
 | ---------------------------------------------------- | ------- | ---- |
-| 🔜 Concevoir le schéma de base de données            | ❌      |      |
-| Créer les tables et relations conformément au schéma | ❌      |      |
+| 🔜 Concevoir le schéma de base de données            | ✅      |      |
+| Créer les tables et relations conformément au schéma | ✅      |      |
 
 ## Tests
 
